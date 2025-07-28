@@ -85,7 +85,7 @@ const ChatBotWidget = () => {
 
   return (
     <>
-      {/* Chat Icon Button */}
+
  <button
   className="chat-icon"
   ref={chatIconRef}
