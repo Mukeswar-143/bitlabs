@@ -1,11 +1,6 @@
-import React, { useState,useEffect } from 'react';
 import axios from 'axios';
-import ApplicantAPIService, { apiUrl } from '../../services/ApplicantAPIService';
 import { useUserContext } from '../common/UserProvider';
-import { useNavigate } from 'react-router-dom';
-import { PhoneInput } from 'react-international-phone';
-import 'react-international-phone/style.css';
-import { Typeahead } from 'react-bootstrap-typeahead';
+import 'react-international-phone/style.css'
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { ClipLoader } from 'react-spinners';
 import './ApplicantBasicDetails.css';
@@ -19,8 +14,10 @@ const ApplicantBasicDetails1 = () => {
   const [loading, setLoading] = useState(true);
   const [resumeFile, setResumeFile] = useState(null);
   const [requestData, setRequestData] = useState(null);
-  const [loginUrl, setLoginUrl] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile,] = useState(null);
+  const setLoginUrl = (url) => {
+    window.open(url, '_blank');
+  }
 
   useEffect(() => {
     setLoading(false);
@@ -77,10 +74,9 @@ const handleResumeSelect = (e) => {
           }
           return response.json();
         })
-        .then(data => {
-          const loginUrl = `https://rb.chalowithcharan.com:5173/auth/login?identifier=${encodeURIComponent(requestData.identifier)}&password=${encodeURIComponent(requestData.password)}`;
-          setLoginUrl(loginUrl);
-          window.open(loginUrl, '_blank');
+       .then(data => {
+        const loginUrl = `https://rb.chalowithcharan.com:5173/auth/login?identifier=${encodeURIComponent(requestData.identifier)}&password=${encodeURIComponent(requestData.password)}`;
+        setLoginUrl(loginUrl);
         })
         .catch(error => {
           
@@ -143,7 +139,7 @@ const handleResumeSelect = (e) => {
         <div className="col-lg-12 col-md-12 ">
           <div className="post-new profile-setting bg-white">
  
-          <div class="wrap-img flex2" style={{ position: 'relative' }}>
+          <div className="wrap-img flex2" style={{ position: 'relative' }}>
  
           <div id="upload-profile" style={{ display: 'flex', alignItems: 'center' }}>
       <input
