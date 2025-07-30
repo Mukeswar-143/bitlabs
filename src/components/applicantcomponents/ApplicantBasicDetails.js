@@ -551,6 +551,11 @@ delete transformedApplicantProfileDTO.skillsRequired;
                   'Interior Designing','Fashion Designing','Hotel Management and Catering Technology','Pharmacy','Medical Laboratory Technology',
                  'Radiology and Imaging Technology'],  
   };
+  const handleExperienceClick = (label) => {
+  setExperience(label);
+  setIsExperienceMenuOpen(false);
+};
+
 
   const renderStageFields = () => {
     switch (currentStage) {
@@ -657,89 +662,88 @@ delete transformedApplicantProfileDTO.skillsRequired;
       </div>
 
 
-            <div className="input-wrapper">
-      <Typeahead
-        id="experience"
-        options={yearsOptions}
-        placeholder="*Experience in Years"
-         open={isExperienceMenuOpen}
-                onFocus={() => {
-                  setIsExperienceMenuOpen(true);
-                  setIsLocationMenuOpen?.(false);
-                }}
-                onBlur={() => {
-                  setTimeout(() => setIsExperienceMenuOpen(false), 150); // allow selection to register
-                }}
-                onInputChange={() => { }}
-                inputProps={{ readOnly: true, style: { cursor: 'pointer' } }}
-                filterBy={() => true}
-                highlightOnlyResult={false}
-                renderMenuItemChildren={(option) => (
-                  <div
-                    style={{
-                      padding: '8px 12px',
-                      fontWeight: option.label === experience ? 'bold' : 'normal',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {option.label}
-                  </div>
-                )}
-                renderMenu={(results, menuProps) => (
-                  <ul
-                    {...menuProps}
-                    style={{
-                      maxHeight: '200px',
-                      overflowY: 'auto',
-                      margin: 0,
-                      padding: 0,
-                      listStyle: 'none',
-                      border: '1px solid #ccc',
-                      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-                      backgroundColor: 'white',
-                      position: 'absolute',
-                      zIndex: 1000,
-                      width: '100%',
-                    }}
-                  >
-                    {results.map((option, index) => (
-                    <li
-  key={option.label} 
-  role="button"     
-  tabIndex={0}       
-  onClick={() => handleExperienceClick(option.label)}
-  onKeyDown={(e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      handleExperienceClick(option.label);
-    }
-  }}
-  style={{
-    padding: '3px 7px',
-    fontSize: '16px',
-    fontWeight: option.label === experience ? 'bold' : 'normal',
-    cursor: 'pointer',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  }}
->
-  {option.label}
-</li>
+<div className="input-wrapper">
+  <Typeahead
+    id="experience"
+    options={yearsOptions}
+    placeholder="*Experience in Years"
+    open={isExperienceMenuOpen}
+    onFocus={() => {
+      setIsExperienceMenuOpen(true);
+      setIsLocationMenuOpen?.(false);
+    }}
+    onBlur={() => {
+      setTimeout(() => setIsExperienceMenuOpen(false), 150); // allow selection to register
+    }}
+    onInputChange={() => { }}
+    onChange={() => { }} // prevents default selection handling
+    inputProps={{ readOnly: true, style: { cursor: 'pointer' } }}
+    filterBy={() => true}
+    highlightOnlyResult={false}
+    className="input-form typeahead"
+    single
+    selected={experience ? [experience] : []}
+    renderMenuItemChildren={(option) => (
+      <div
+        style={{
+          padding: '8px 12px',
+          fontWeight: option.label === experience ? 'bold' : 'normal',
+          cursor: 'pointer',
+        }}
+      >
+        {option.label}
+      </div>
+    )}
+    renderMenu={(results, menuProps) => (
+      <ul
+        {...menuProps}
+        style={{
+          maxHeight: '200px',
+          overflowY: 'auto',
+          margin: 0,
+          padding: 0,
+          listStyle: 'none',
+          border: '1px solid #ccc',
+          boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+          backgroundColor: 'white',
+          position: 'absolute',
+          zIndex: 1000,
+          width: '100%',
+        }}
+      >
+        {results.map((option) => (
+          <li
+            key={option.label}
+            role="button"
+            tabIndex={0}
+            onClick={() => handleExperienceClick(option.label)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleExperienceClick(option.label);
+              }
+            }}
+            style={{
+              padding: '3px 7px',
+              fontSize: '16px',
+              fontWeight: option.label === experience ? 'bold' : 'normal',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {option.label}
+          </li>
+        ))}
+      </ul>
+    )}
+  />
+  {!experience && errors.experience && (
+    <div className="error-message">{errors.experience}</div>
+  )}
+</div>
 
-                    ))}
-                  </ul>
-                )}
-        className="input-form typeahead"
-        single  
-             
-        selected={experience ? [experience] : []}
- 
-      />
-      {!experience && errors.experience && (
-        <div className="error-message">{errors.experience}</div>
-      )}
-    </div>
  
     <div className="input-wrapper">
         <Typeahead
