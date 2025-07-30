@@ -438,7 +438,7 @@ const ProfessionalDetailsPopup = ({ applicantDetails }) => {
                   results.map((option, index) => (
                     <li
                       key={index}
-                      onClick={() => {
+                      onPointerDown={() => {
                         const updated = [...formValues.preferredJobLocations, option.value];
                         handleInputChange('preferredJobLocations', updated);
                         setIsLocationMenuOpen(true);

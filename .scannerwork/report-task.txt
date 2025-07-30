@@ -2,5 +2,5 @@ projectKey=Bitlabs-Main-Web
 serverUrl=http://localhost:9000
 serverVersion=25.7.0.110598
 dashboardUrl=http://localhost:9000/dashboard?id=Bitlabs-Main-Web
-ceTaskId=aad5143d-eb34-454e-bd57-4b86d1e146d5
-ceTaskUrl=http://localhost:9000/api/ce/task?id=aad5143d-eb34-454e-bd57-4b86d1e146d5
+ceTaskId=6ef882e7-fa2a-44f2-9416-965cd48dc63c
+ceTaskUrl=http://localhost:9000/api/ce/task?id=6ef882e7-fa2a-44f2-9416-965cd48dc63c
