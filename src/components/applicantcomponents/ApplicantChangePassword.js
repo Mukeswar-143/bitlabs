@@ -2,9 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { useUserContext } from '../common/UserProvider';
 import axios from 'axios';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import ApplicantAPIService, { apiUrl } from '../../services/ApplicantAPIService';
-import { Link } from 'react-router-dom';
-import BackButton from '../common/BackButton';
+import { apiUrl } from '../../services/ApplicantAPIService';
 import { useNavigate } from "react-router-dom";
 import Snackbar from '../common/Snackbar';
 import CryptoJS from "crypto-js";
@@ -16,7 +14,6 @@ function ApplicantChangePassword() {
   const [confirmedPassword, setConfirmedPassword] = useState('');
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [snackbar, setSnackbar] = useState({ open: false, message: '', type: '' });
   const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
@@ -171,7 +168,7 @@ const response = await axios.post(
   return (
     <div>
       <>
-        <div class="dashboard__content">
+        <div className="dashboard__content">
         <section className="page-title-dashboard">
       <div className="themes-container">
         <div className="row">
