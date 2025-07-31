@@ -1,10 +1,9 @@
 import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import ApplicantAPIService,{ apiUrl } from '../../services/ApplicantAPIService';
+import { apiUrl } from '../../services/ApplicantAPIService';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { useUserContext } from '../common/UserProvider';
-import { Link } from 'react-router-dom';
 import BackButton from '../common/BackButton';
 import Snackbar from '../common/Snackbar';
 
@@ -14,16 +13,14 @@ function ApplicantEditProfile() {
   const user1 = useUserContext();
   const user=user1.user;
   const [snackbar, setSnackbar] = useState({ open: false, message: '', type: '' });
-
-  let error = "";
-  const [userData, setUserData] = useState({
-    basicDetails: {},
-    xClassDetails: {},
-    intermediateDetails: {},
-    graduationDetails: {},
-    skillsRequired: [],
-    experienceDetails: [],   
-    applicant:{},
+ const [userData] = useState({
+  basicDetails: {},
+  xClassDetails: {},
+  intermediateDetails: {},
+  graduationDetails: {},
+  skillsRequired: [],
+  experienceDetails: [],
+  applicant: {},
   });
   const [errors, setErrors] = useState({
     applicant: {},
