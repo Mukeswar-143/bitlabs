@@ -22,7 +22,7 @@ function ApplicantEditProfile() {
   experienceDetails: [],
   applicant: {},
   });
-  const [errors, setErrors] = useState({
+  const [errors,] = useState({
     applicant: {},
     basicDetails: {},
     xClassDetails: {},
@@ -30,386 +30,200 @@ function ApplicantEditProfile() {
     graduationDetails: {},
     skillsRequired: [],
     experienceDetails: [],  
-    applicant:{}, 
   });
-  const validateForm = (fielname) => {
-    const newErrors = {
-      applicant: {},
-      basicDetails: {},
-      xClassDetails: {},
-      intermediateDetails: {},
-      graduationDetails: {},
-      skillsRequired: [],
-      experienceDetails: [],
-    };
-const currentDate = new Date();
-const maxAllowedAge = 18;
-if(fielname === "" || fielname === 'email'){
-  if (!applicant.email) {
-    newErrors.applicant.email='Email is required.';
+  const validateField = (value, rules) => {
+  for (const rule of rules) {
+    const error = rule(value);
+    if (error) return error;
   }
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  newErrors.applicant.email=emailRegex.test(applicant.email) ? '' : 'Please enter a valid email address.';
+  return '';
+};
 
-}
-if(fielname === "" || fielname === 'name'){
-  if (!applicant.name) {
-    newErrors.applicant.name= 'Full name is required.';
-  }
-  if (!/^[a-zA-Z\s]+$/.test(applicant.name)) {
-    newErrors.applicant.name='Please enter a valid full name and should not have any numbers and special char.';
-  }
-  if (applicant.name.length < 3) {
-    newErrors.applicant.name= 'Full name should be at least three characters long.';
-  }
-}
-if(fielname === "" || fielname === 'mobilenumber'){
-  if (!applicant.mobilenumber.trim()) {
-    newErrors.applicant.mobilenumber= 'Mobile number is required.';
-  }
-  if (!/^\d+$/.test(applicant.mobilenumber)) {
-    newErrors.applicant.mobilenumber= 'Mobile number must contain only numeric digits.';
-  }
-  if (applicant.mobilenumber.length !== 10) {
-    newErrors.applicant.mobilenumber='Mobile number must have a specific length (e.g., 10 digits).';
-  }
-  if (/\s/.test(applicant.mobilenumber)) {
-    newErrors.applicant.mobilenumber= 'Mobile number cannot contain spaces.';
-  }
-  const firstDigit = applicant.mobilenumber.charAt(0);
-  if (!['6', '7', '8', '9'].includes(firstDigit)) {
-    newErrors.applicant.mobilenumber= 'Mobile number should begin with 6, 7, 8, or 9.';
-  }
-}
+const isRequired = (msg) => (val) => (!val ? msg : '');
+const regexMatch = (regex, msg) => (val) => (!regex.test(val) ? msg : '');
+const range = (min, max, msg) => (val) => {
+  const num = parseFloat(val);
+  return num < min || num > max ? msg : '';
+};
+const isLength = (len, msg) => (val) => val.length !== len ? msg : '';
+const startsWith = (validStart, msg) => (val) => !validStart.includes(val.charAt(0)) ? msg : '';
 
-if(fielname === "" || fielname === "dateOfBirth")
-{
- 
-  if (basicDetails && (fielname === "" || fielname === "dateOfBirth")) {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(basicDetails.dateOfBirth)){
-    
-    } else {
-      const selectedDate = new Date(basicDetails.dateOfBirth);
-      const currentDate = new Date();
-      const maxAllowedAge = 18;
-   
-      if (selectedDate > new Date(currentDate.getFullYear() - maxAllowedAge, currentDate.getMonth(), currentDate.getDate())) {
-        newErrors.basicDetails.dateOfBirth = 'The Date of Birth should be at least 18 years ago.';
-      }
-    }
-  }
-}
-
-
-if(fielname === "" || fielname === "experience")
-{
-    if (!experience) {
-      newErrors.basicDetails.city = 'Experience is required';
-    } else {
-      if (/\D/.test(experience)) {
-        newErrors.basicDetails.city = 'Experience should not be number';
-      }
-    }
-  }
-  
-if(fielname === "" || fielname === "city")
-{
-    if (!basicDetails.city) {
-      newErrors.basicDetails.city = 'City is required';
-    } else {
-      if (/\d/.test(basicDetails.city)) {
-        newErrors.basicDetails.city = 'City should not be number';
-      }
-    }
-  }
-  if(fielname==="" || fielname === "address")
-  {
-    if (!basicDetails.address) {
-      newErrors.basicDetails.address = 'Address is required';
-    }
-  }
-  
-    if(fielname === "" || fielname === "pincode")
-{
-    if (!basicDetails.pincode) {
-      newErrors.basicDetails.pincode = 'Pincode is required';
-    } else if (!/^\d{6}$/.test(basicDetails.pincode)) {
-      newErrors.basicDetails.pincode = 'Pincode should be 6 digits and contain only numbers';
-    }
-  }
-   
-    if(fielname === "" || fielname === "state")
-{
-    if (!basicDetails.state) {
-      newErrors.basicDetails.state = 'state is required';
-    } else {
-      if (/\d/.test(basicDetails.state)) {
-        newErrors.basicDetails.state = 'State should contain charectes only';
-      }
-    }
-  }
- 
-    if(fielname === "" || fielname === "xschoolName")
-    {
-    if (!xClassDetails.xschoolName) {
-      newErrors.xClassDetails.xschoolName = 'School name is required';
-    } else {
-      if (!/^[a-zA-Z\s]+$/.test(xClassDetails.xschoolName)) {
-        newErrors.xClassDetails.xschoolName = 'School name should not be number';
-      }
-    }}
-   
-    if(fielname === "" || fielname === "xboard")
-    {
-    if (!xClassDetails.xboard) {
-      newErrors.xClassDetails.xboard = 'Board is required';
-    } else {
-      if (!/^[a-zA-Z\s]+$/.test(xClassDetails.xboard)) {
-        newErrors.xClassDetails.xboard = 'Board should not be number';
-      }
-    }
-  }
-   
-    if(fielname === "" || fielname === "xpercentage")
-{
-    if (!xClassDetails.xpercentage) {
-      newErrors.xClassDetails.xpercentage = 'Percentage is required';
-    } else {
-      const percentageValue = xClassDetails.xpercentage;
-      const validPercentageRegex = /^\d+(\.\d+)?$/;
-      if (!validPercentageRegex.test(percentageValue) || parseFloat(percentageValue) < 0 || parseFloat(percentageValue) > 100) {
-        newErrors.xClassDetails.xpercentage = 'Enter a valid percentage between 0 and 100 (only digits and period(.) are allowed)';
-      }
-    }
-  }
-   
-    if(fielname === "" || fielname === "xPincode")
-    {
-    if (!xClassDetails.xPincode) {
-      newErrors.xClassDetails.xPincode = 'Pincode is required';
-    } else if (!/^\d{6}$/.test(xClassDetails.xPincode)) {
-      newErrors.xClassDetails.xPincode = 'Pincode should be 6 digits and contain only numbers';
-    }
-  }
-   if(fielname === "" || fielname === "xyearOfPassing")
-{
-if (!xClassDetails.xyearOfPassing) {
-  newErrors.xClassDetails.xyearOfPassing = 'Year of passing is required';
-} else {
-  if (!/^\d{4}$/.test(xClassDetails.xyearOfPassing)) {
-    newErrors.xClassDetails.xyearOfPassing = 'Year of passing should be a 4-digit number';
-  } else {
-    if (!/^\d+$/.test(xClassDetails.xyearOfPassing)) {
-      newErrors.xClassDetails.xyearOfPassing = 'Year of passing should contain only digits';
-    }
-  }
-}
-}
-    if(fielname === "" || fielname === "xCity")
-{
-if (!xClassDetails.xCity) {
-  newErrors.xClassDetails.xCity = 'City is required';
-} else {
-  if (!/^[a-zA-Z\s]+$/.test(xClassDetails.xCity)) {
-    newErrors.xClassDetails.xCity = 'City should not be number';
-  }
-}
-}
-if(fielname === "" || fielname === "xState")
-{
-if (!xClassDetails.xState) {
-  newErrors.xClassDetails.xState = 'State is required';
-} else {
-  if (!/^[a-zA-Z\s]+$/.test(xClassDetails.xState)) {
-    newErrors.xClassDetails.xState = 'State should not be number';
-  }
-}
-}
-   if(fielname === "" || fielname === "icollegeName")
-{
-if (!intermediateDetails.icollegeName) {
-  newErrors.intermediateDetails.icollegeName = 'College name is required';
-} else {
-  if (!/^[a-zA-Z\s]+$/.test(intermediateDetails.icollegeName)) {
-    newErrors.intermediateDetails.icollegeName = 'College name should not be number';
-  }
-}
-}
-if(fielname === "" || fielname === "iboard")
-{
-if (!intermediateDetails.iboard) {
-  newErrors.intermediateDetails.iboard = 'Board name is required';
-} else {
-  if (!/^[a-zA-Z\s]+$/.test(intermediateDetails.iboard)) {
-    newErrors.intermediateDetails.iboard = 'Board name should not be number only';
-  }
-}
-}
-if(fielname === "" || fielname === "iprogram")
-{
-if (!intermediateDetails.iprogram) {
-  newErrors.intermediateDetails.iprogram = 'Program is required';
-} else {
-  if (!/^[a-zA-Z\s]+$/.test(intermediateDetails.iprogram)) {
-    newErrors.intermediateDetails.iprogram = 'Program should contain text only';
-  }
-}
-}  
-    if(fielname === "" || fielname === "ipercentage")
-{
-    if (!intermediateDetails.ipercentage) {
-      newErrors.intermediateDetails.ipercentage = 'Percentage is required';
-    } else {
-      const percentageValue = intermediateDetails.ipercentage;
-      const validPercentageRegex = /^\d+(\.\d+)?$/;
-      if (!validPercentageRegex.test(percentageValue) || parseFloat(percentageValue) < 0 || parseFloat(percentageValue) > 100) {
-        newErrors.intermediateDetails.ipercentage = 'Enter a valid percentage between 0 (only digits and period(.) are allowed)';
-      }
-    }
-  }
-
-    if(fielname === "" || fielname === "iyearOdPassing")
-{
-    if (!intermediateDetails.iyearOfPassing) {
-      newErrors.intermediateDetails.iyearOfPassing = 'Year of passing is required';
-    } else {
-      if (!/^\d{4}$/.test(intermediateDetails.iyearOfPassing)) {
-        newErrors.intermediateDetails.iyearOfPassing = 'Year of passing should be a 4-digit number';
-      } else {
-        if (!/^\d+$/.test(intermediateDetails.iyearOfPassing)) {
-          newErrors.intermediateDetails.iyearOfPassing = 'Year of passing should contain only digits';
-        }
-      }
-    }
-  }
-if(fielname === "" || fielname === "iCity")
-{
-if (!intermediateDetails.iCity) {
-  newErrors.intermediateDetails.iCity = 'City is required';
-} else {
-  if (!/^[a-zA-Z\s]+$/.test(intermediateDetails.iCity)) {
-    newErrors.intermediateDetails.iCity = 'City should contain text only';
-  }
-}
-}
-    if(fielname === "" || fielname === "iState")
-{
-if (!intermediateDetails.iState) {
-  newErrors.intermediateDetails.iState = 'State is required';
-} else {
-  if (!/^[a-zA-Z\s]+$/.test(intermediateDetails.iState)) {
-    newErrors.intermediateDetails.iState = 'State should contain text only';
-  }
-}
-}
-    if(fielname === "" || fielname === "gcollegeName")
-{
-if (!graduationDetails.gcollegeName) {
-  newErrors.graduationDetails.gcollegeName = 'College name is required';
-} else {
-  if (!/^[^\d]+$/.test(graduationDetails.gcollegeName)) {
-    newErrors.graduationDetails.gcollegeName = 'College name should contain text only';
-  }
-}
-}
-    if(fielname === "" || fielname === "gboard")
-{
-if (!graduationDetails.gboard) {
-  newErrors.graduationDetails.gboard = 'Board name is required';
-} else {
-  if (!/^[a-zA-Z\s]+$/.test(graduationDetails.gboard)) {
-    newErrors.graduationDetails.gboard = 'Board name should contain text only';
-  }
-}
-}
-    if(fielname === "" || fielname === "gprogram")
-{
-if (!graduationDetails.gprogram) {
-  newErrors.graduationDetails.gprogram = 'Program is required';
-} else {
-  if (!/^[a-zA-Z\s]+$/.test(graduationDetails.gprogram)) {
-    newErrors.graduationDetails.gprogram = 'Program should contain text only';
-  }
-}
-}
-      if(fielname === "" || fielname === "gpercentage")
-{
-    if (!graduationDetails.gpercentage) {
-      newErrors.graduationDetails.gpercentage = 'Percentage is required';
-    } else {
-      const percentageValue = graduationDetails.gpercentage;
-      const validPercentageRegex = /^\d+(\.\d+)?$/;
-      if (!validPercentageRegex.test(percentageValue) || parseFloat(percentageValue) < 0 || parseFloat(percentageValue) > 100) {
-        newErrors.graduationDetails.gpercentage = 'Enter a valid percentage between 0 and 100 (only digits and period(.) are allowed)';
-      }
-    }
-  }
-   
-    if(fielname === "" || fielname === "gyearOfPassing")
-{
-    if (!graduationDetails.gyearOfPassing) {
-      newErrors.graduationDetails.gyearOfPassing = 'Year of passing is required';
-    } else {
-      if (!/^\d{4}$/.test(graduationDetails.gyearOfPassing)) {
-        newErrors.graduationDetails.gyearOfPassing = 'Year of passing should be a 4-digit number';
-      } else {
-        if (!/^\d+$/.test(graduationDetails.gyearOfPassing)) {
-          newErrors.graduationDetails.gyearOfPassing = 'Year of passing should contain only digits';
-        }
-      }
-    }
-  }
-    if(fielname === "" || fielname === "gCity")
-{
-if (!graduationDetails.gCity) {
-  newErrors.graduationDetails.gCity = 'City is required';
-} else {
-  if (!/^[a-zA-Z\s]+$/.test(graduationDetails.gCity)) {
-    newErrors.graduationDetails.gCity = 'City should contain text only';
-  }
-}
-}
-if(fielname === "" || fielname === "gState")
-{
-if (!graduationDetails.gState) {
-  newErrors.graduationDetails.gState = 'State is required';
-} else {
-  if (!/^[a-zA-Z\s]+$/.test(graduationDetails.gState)) {
-    newErrors.graduationDetails.gState = 'State should contain text only';
-  }
-}
-}
-    skillsRequired.forEach((skill, index) => {
-      if(fielname === "" || fielname === "skillName")
-{
-      if (skill==undefined || !skill.skillName) {     
-        if(newErrors.skillsRequired[index]===undefined)
-        newErrors.skillsRequired[index] =  {skillName:'',experience:''};
-        newErrors.skillsRequired[index].skillName='Skill name is required';
-      } else if (/^\d+$/.test(skill.skillName)) {
-        if(newErrors.skillsRequired[index]===undefined)
-  newErrors.skillsRequired[index] =  {skillName:'',experience:''};
-          newErrors.skillsRequired[index].skillName='Skill name should not be a numeric'; 
-      }
-    }
-      if(fielname === "" || fielname === "experience")
-{
-      if (!skill.experience) {
-        if(newErrors.skillsRequired[index]===undefined)
-  newErrors.skillsRequired[index] =  {skillName:'',experience:''};
-        newErrors.skillsRequired[index].experience='Experience is required';
-      } 
-      else if (!/^\d+$/.test(skill.experience)) {
-        if(newErrors.skillsRequired[index]===undefined)
-  newErrors.skillsRequired[index] =  {skillName:'',experience:''};
-        newErrors.skillsRequired[index].experience='Experience should be numeric' ;
-      }
-    }
-    });
-    setErrors(newErrors);
-    console.log(newErrors);
-    return Object.keys(newErrors).every(key => Object.keys(newErrors[key]).length === 0);
+const validateForm = (fielname) => {
+  const newErrors = {
+    applicant: {},
+    basicDetails: {},
+    xClassDetails: {},
+    intermediateDetails: {},
+    graduationDetails: {},
+    skillsRequired: [],
+    experienceDetails: [],
   };
+
+  const fieldValidators = {
+    email: () => {
+      newErrors.applicant.email = validateField(applicant?.email, [
+        isRequired('Email is required.'),
+        regexMatch(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Please enter a valid email address.')
+      ]);
+    },
+    name: () => {
+      newErrors.applicant.name = validateField(applicant?.name, [
+        isRequired('Full name is required.'),
+        regexMatch(/^[a-zA-Z\s]+$/, 'Please enter a valid full name without numbers or special characters.'),
+        (val) => val.length < 3 ? 'Full name should be at least three characters long.' : ''
+      ]);
+    },
+    mobilenumber: () => {
+      const mobile = applicant?.mobilenumber?.trim() || '';
+      newErrors.applicant.mobilenumber = validateField(mobile, [
+        isRequired('Mobile number is required.'),
+        regexMatch(/^\d+$/, 'Mobile number must contain only numeric digits.'),
+        isLength(10, 'Mobile number must be exactly 10 digits.'),
+        regexMatch(/^\S+$/, 'Mobile number cannot contain spaces.'),
+        startsWith(['6', '7', '8', '9'], 'Mobile number should begin with 6, 7, 8, or 9.')
+      ]);
+    },
+    dateOfBirth: () => {
+      const dob = basicDetails?.dateOfBirth;
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
+        newErrors.basicDetails.dateOfBirth = 'Date of Birth is required and should be in YYYY-MM-DD format.';
+      } else {
+        const selectedDate = new Date(dob);
+        const maxAgeDate = new Date(new Date().setFullYear(new Date().getFullYear() - 18));
+        if (selectedDate > maxAgeDate) {
+          newErrors.basicDetails.dateOfBirth = 'The Date of Birth should be at least 18 years ago.';
+        }
+      }
+    },
+    experience: () => {
+      newErrors.basicDetails.city = validateField(experience, [
+        isRequired('Experience is required'),
+        regexMatch(/^\d+$/, 'Experience should be number')
+      ]);
+    },
+    city: () => {
+      newErrors.basicDetails.city = validateField(basicDetails?.city, [
+        isRequired('City is required'),
+        regexMatch(/^[^\d]+$/, 'City should not be number')
+      ]);
+    },
+    address: () => {
+      newErrors.basicDetails.address = validateField(basicDetails?.address, [isRequired('Address is required')]);
+    },
+    pincode: () => {
+      newErrors.basicDetails.pincode = validateField(basicDetails?.pincode, [
+        isRequired('Pincode is required'),
+        regexMatch(/^\d{6}$/, 'Pincode should be 6 digits and contain only numbers')
+      ]);
+    },
+    state: () => {
+      newErrors.basicDetails.state = validateField(basicDetails?.state, [
+        isRequired('State is required'),
+        regexMatch(/^[a-zA-Z\s]+$/, 'State should contain characters only')
+      ]);
+    },
+    // xClassDetails validators omitted for brevity
+
+    // Intermediate
+    icollegeName: () => {
+      newErrors.intermediateDetails.icollegeName = validateField(intermediateDetails?.icollegeName, [
+        isRequired('College name is required'),
+        regexMatch(/^[a-zA-Z\s]+$/, 'College name should not be number')
+      ]);
+    },
+    iboard: () => {
+      newErrors.intermediateDetails.iboard = validateField(intermediateDetails?.iboard, [
+        isRequired('Board name is required'),
+        regexMatch(/^[a-zA-Z\s]+$/, 'Board name should not be number only')
+      ]);
+    },
+    iprogram: () => {
+      newErrors.intermediateDetails.iprogram = validateField(intermediateDetails?.iprogram, [
+        isRequired('Program is required'),
+        regexMatch(/^[a-zA-Z\s]+$/, 'Program should contain text only')
+      ]);
+    },
+    ipercentage: () => {
+      newErrors.intermediateDetails.ipercentage = validateField(intermediateDetails?.ipercentage, [
+        isRequired('Percentage is required'),
+        regexMatch(/^\d+(\.\d+)?$/, 'Enter a valid percentage between 0 and 100 (only digits and period(.) are allowed)'),
+        range(0, 100, 'Percentage should be between 0 and 100')
+      ]);
+    },
+    iyearOfPassing: () => {
+      newErrors.intermediateDetails.iyearOfPassing = validateField(intermediateDetails?.iyearOfPassing, [
+        isRequired('Year of passing is required'),
+        regexMatch(/^\d{4}$/, 'Year of passing should be a 4-digit number')
+      ]);
+    },
+    iCity: () => {
+      newErrors.intermediateDetails.iCity = validateField(intermediateDetails?.iCity, [
+        isRequired('City is required'),
+        regexMatch(/^[a-zA-Z\s]+$/, 'City should contain text only')
+      ]);
+    },
+    iState: () => {
+      newErrors.intermediateDetails.iState = validateField(intermediateDetails?.iState, [
+        isRequired('State is required'),
+        regexMatch(/^[a-zA-Z\s]+$/, 'State should contain text only')
+      ]);
+    },
+
+    // Graduation
+    gcollegeName: () => {
+      newErrors.graduationDetails.gcollegeName = validateField(graduationDetails?.gcollegeName, [
+        isRequired('College name is required'),
+        regexMatch(/^[a-zA-Z\s]+$/, 'College name should contain text only')
+      ]);
+    },
+    gboard: () => {
+      newErrors.graduationDetails.gboard = validateField(graduationDetails?.gboard, [
+        isRequired('Board name is required'),
+        regexMatch(/^[a-zA-Z\s]+$/, 'Board name should contain text only')
+      ]);
+    },
+    gprogram: () => {
+      newErrors.graduationDetails.gprogram = validateField(graduationDetails?.gprogram, [
+        isRequired('Program is required'),
+        regexMatch(/^[a-zA-Z\s]+$/, 'Program should contain text only')
+      ]);
+    },
+    gpercentage: () => {
+      newErrors.graduationDetails.gpercentage = validateField(graduationDetails?.gpercentage, [
+        isRequired('Percentage is required'),
+        regexMatch(/^\d+(\.\d+)?$/, 'Enter a valid percentage between 0 and 100 (only digits and period(.) are allowed)'),
+        range(0, 100, 'Percentage should be between 0 and 100')
+      ]);
+    },
+    gyearOfPassing: () => {
+      newErrors.graduationDetails.gyearOfPassing = validateField(graduationDetails?.gyearOfPassing, [
+        isRequired('Year of passing is required'),
+        regexMatch(/^\d{4}$/, 'Year of passing should be a 4-digit number')
+      ]);
+    },
+    gCity: () => {
+      newErrors.graduationDetails.gCity = validateField(graduationDetails?.gCity, [
+        isRequired('City is required'),
+        regexMatch(/^[a-zA-Z\s]+$/, 'City should contain text only')
+      ]);
+    },
+    gState: () => {
+      newErrors.graduationDetails.gState = validateField(graduationDetails?.gState, [
+        isRequired('State is required'),
+        regexMatch(/^[a-zA-Z\s]+$/, 'State should contain text only')
+      ]);
+    }
+  };
+
+  Object.keys(fieldValidators).forEach((key) => {
+    if (fielname === '' || fielname === key) {
+      fieldValidators[key]();
+    }
+  });
+
+  return newErrors;
+};
+
   useEffect(() => {    
     const fetchData = async () => {
         try {
@@ -543,8 +357,6 @@ if (!graduationDetails.gState) {
          endDate: "",
        },
      ]); 
-  const [dragging, setDragging] = useState(false);
-   const [selectedSkill, setSelectedSkill] = useState("");
    const handleSkillChange = (e, index, field) => {
     const updatedSkillsRequired = [...skillsRequired];
         updatedSkillsRequired[index][field] = e.target.value;
@@ -719,13 +531,13 @@ const handleCloseSnackbar = () => {
 
 
 
-          <div class="author-profile flex2 border-bt">
-          <div class="wrap-img flex2">
+          <div className="author-profile flex2 border-bt">
+          <div className="wrap-img flex2">
   <div id="upload-profile">
-    <h5 class="fw-6">Upload your profile picture: </h5>
+    <h5 className="fw-6">Upload your profile picture: </h5>
     <h6>JPG or PNG</h6>
     <input
-      class="up-file"
+      className="up-file"
       id="tf-upload-img"
       type="file"
       name="profile"
@@ -751,12 +563,12 @@ const handleCloseSnackbar = () => {
     </button>
   </div>
 </div>&nbsp;&nbsp;&nbsp;
-<div class="wrap-img flex2">
+<div className="wrap-img flex2">
   <div id="upload-profile">
-    <h5 class="fw-6">Upload your resume: </h5>
+    <h5 className="fw-6">Upload your resume: </h5>
     <h6>PDF only</h6>
     <input
-      class="up-file"
+      className="up-file"
       id="tf-upload-img"
       type="file"
       name="profile"
@@ -791,41 +603,44 @@ const handleCloseSnackbar = () => {
                      <div className="form-infor-profile">
               <h3 className="title-info">Information</h3>
               <div className="form-infor flex flat-form">
-
-                         
-
-
                 <div className="info-box info-wd">
                 <fieldset>
-                <label class="title-user fw-7">Full Name <span className="color-red">*</span></label>
-                  <input  type="text"
-                          placeholder="Name Given at Registration"
-                          className="input-form"
-                          value={applicant.name}
-                          onChange={(e) =>
-                           setApplicant({...applicant,name: e.target.value,})}
-                           onBlur={() => validateForm("name")}
-                  />
+                <label className="title-user fw-7" htmlFor="Full-name">Full Name <span className="color-red">*</span></label>
+                 <input
+  type="text"
+  placeholder="Name Given at Registration"
+  id="Full-name"
+  className="input-form"
+  value={applicant?.name || ''}  // Optional chaining with fallback
+  onChange={(e) => {
+    if (applicant) {
+      setApplicant({ ...applicant, name: e.target.value });
+    } else {
+      setApplicant({ name: e.target.value }); // or initialize as needed
+    }
+  }}
+  onBlur={() => validateForm("name")}
+/>
+
                   <div className="validation-errors">
             {errors.applicant.name && (
               <div className="error-message">{errors.applicant.name}</div>
             )}
           </div>
           </fieldset>
-          
-        
-
                   <fieldset>
-                  <label class="title-user fw-7">WhatsApp<span className="color-red">*</span></label>
-                    <input
-                           type="text"
-                           placeholder="WhatsAppNumber"
-                           className="input-form"
-                           value={applicant.mobilenumber}
-                           onChange={(e) =>
-                           setApplicant({ ...applicant, mobilenumber: e.target.value })}
-                           onBlur={() => validateForm("mobilenumber")}
-              />
+                  <label className="title-user fw-7" htmlFor="WhatsApp">WhatsApp<span className="color-red">*</span></label>
+                  <input
+  type="text"
+  placeholder="WhatsApp Number"
+  id="WhatsApp"
+  className="input-form"
+  value={applicant?.mobilenumber || ''}
+  onChange={(e) => {
+    setApplicant({ ...applicant, mobilenumber: e.target.value });
+  }}
+  onBlur={() => validateForm("mobilenumber")}
+/>
               <div className="validation-errors">
             {errors.applicant.mobilenumber && (
               <div className="error-message">{errors.applicant.mobilenumber}</div>
@@ -834,9 +649,10 @@ const handleCloseSnackbar = () => {
                   </fieldset>             
 
                   <fieldset>
-                  <label class="title-user fw-7">Qualification <span className="color-red">*</span></label>
+                  <label className="title-user fw-7" htmlFor="Qualification">Qualification <span className="color-red">*</span></label>
                   <select
     value={qualification}
+    id="Qualification"
     className="input-form"
     onChange={handleQualificationChange}
     onBlur={() => validateForm("qualification")}
@@ -861,7 +677,7 @@ const handleCloseSnackbar = () => {
 
                   <div className="col-lg-6 col-md-12">
       <div id="item_3" className="dropdown titles-dropdown info-wd">
-      <label class="title-user fw-7">Preferred Location(s) <span className="color-red">*</span></label>
+      <p className="title-user fw-7" id="preferred-location-label">Preferred Location(s) <span className="color-red">*</span></p>
       <Typeahead
   id="cityTypeahead"
   labelKey="city"  
@@ -872,6 +688,7 @@ const handleCloseSnackbar = () => {
   selected={preferredJobLocations}
   inputProps={{
     className: 'input-form',
+    'aria-labelledby': 'preferred-location-label',
   }}
 />
         {errors.city && (
@@ -885,8 +702,8 @@ const handleCloseSnackbar = () => {
                 <div className="info-box info-wd">
 
                 <fieldset>
-                  <label class="title-user fw-7">Date of Birth </label>
-                    
+                  <label className="title-user fw-7" htmlFor="dateOfBirth">Date of Birth </label>
+
                             <input
                              type="date"
                              placeholder="Date of Birth"
@@ -906,13 +723,14 @@ const handleCloseSnackbar = () => {
                   </fieldset>
 
                 <fieldset>
-            <label className="title-user fw-7">
+            <label className="title-user fw-7" htmlFor="email">
                     Email<span className="color-red">*</span>
                   </label> 
                   <input
                     type="text"
+                    id="email"
                     placeholder="Email"
-                    value={applicant.email}
+                    value={applicant?.email || ''}
                     className="input-form"
                     onChange={(e) =>
                       setApplicant({...applicant,email: e.target.value,})}
@@ -926,9 +744,10 @@ const handleCloseSnackbar = () => {
           </fieldset>
 
           <fieldset>
-                  <label class="title-user fw-7">Specialization <span className="color-red">*</span></label>
+                  <label className="title-user fw-7" htmlFor="specialization">Specialization <span className="color-red">*</span></label>
                   <select
     value={specialization}
+    id="specialization"
     className="input-form"
     onChange={(e) =>
     setSpecialization(e.target.value)}
@@ -945,9 +764,10 @@ const handleCloseSnackbar = () => {
                   </fieldset>
 
           <fieldset>
-                  <label class="title-user fw-7">Total Experience <span className="color-red">*</span></label>
+                  <label className="title-user fw-7" htmlFor="totalExperience">Total Experience <span className="color-red">*</span></label>
                     <input
                         type="text"
+                        id="totalExperience"
                         placeholder="Overall Experience"
                         className="input-form"
                         value={experience || ''}
@@ -1333,51 +1153,60 @@ const handleCloseSnackbar = () => {
       <div className="form-social form-wg flex flat-form">
         <div className="form-box  wg-box">
           <div id="item_category2" className="dropdown titles-dropdow">
-            <label className="title-user color-1 fw-7">Experience</label>
-            {experienceDetails && experienceDetails.map((experience, index) => (
-              <div key={index}>
-                <fieldset>
-                  <label className="title-user color-1 fw-7">Company Name</label>
-                  <input
-                    type="text"
-                    className="input-form"
-                    placeholder="ABC Pvt Ltd"
-                    value={experience?.company || ''}
-                    onChange={(e) => handleExperienceChange(e, index, "company")}
-                  />
-                </fieldset>
-                <fieldset>
-                  <label className="title-user color-1 fw-7">Position</label>
-                  <input
-                    type="text"
-                    className="input-form"
-                    placeholder="Java Developer"
-                    value={experience?.position || ''}
-                    onChange={(e) => handleExperienceChange(e, index, "position")}
-                  />
-                </fieldset>
-                <div id="item_date" className="dropdown titles-dropdown">
-                  <label className="title-user color-1 fw-7" htmlFor={`startDate-${index}`}>Start Date</label>
-                  <input
-                    type="date"
-                    className="input-form"
-                    id={`startDate-${index}`}
-                    value={experience?.startDate || ''}
-                    onChange={(e) => handleExperienceChange(e, index, "startDate")}
-                  />
-                </div>
-                <div id="item_date" className="dropdown titles-dropdown">
-                  <label className="title-user color-1 fw-7" htmlFor={`endDate-${index}`}>End Date</label>
-                  <input
-                    type="date"
-                    className="input-form"
-                    id={`endDate-${index}`}
-                    value={experience?.endDate || ''}
-                    onChange={(e) => handleExperienceChange(e, index, "endDate")}
-                  />
-                </div>
-              </div>
-            ))}
+            <p className="title-user color-1 fw-7">Experience</p>
+            {experienceDetails?.map((experience, index) => {
+  const keySuffix = `${experience?.company ?? 'company'}-${experience?.startDate ?? index}`;
+
+  return (
+    <div key={keySuffix}>
+      <fieldset>
+        <label className="title-user color-1 fw-7" htmlFor={`company-${keySuffix}`}>Company Name</label>
+        <input
+          type="text"
+          id={`company-${keySuffix}`}
+          className="input-form"
+          placeholder="ABC Pvt Ltd"
+          value={experience?.company ?? ''}
+          onChange={(e) => handleExperienceChange(e, index, "company")}
+        />
+      </fieldset>
+
+      <fieldset>
+        <label className="title-user color-1 fw-7" htmlFor={`position-${keySuffix}`}>Position</label>
+        <input
+          type="text"
+          id={`position-${keySuffix}`}
+          className="input-form"
+          placeholder="Java Developer"
+          value={experience?.position ?? ''}
+          onChange={(e) => handleExperienceChange(e, index, "position")}
+        />
+      </fieldset>
+
+      <div id="item_date" className="dropdown titles-dropdown">
+        <label className="title-user color-1 fw-7" htmlFor={`startDate-${keySuffix}`}>Start Date</label>
+        <input
+          type="date"
+          className="input-form"
+          id={`startDate-${keySuffix}`}
+          value={experience?.startDate ?? ''}
+          onChange={(e) => handleExperienceChange(e, index, "startDate")}
+        />
+      </div>
+
+      <div id="item_date" className="dropdown titles-dropdown">
+        <label className="title-user color-1 fw-7" htmlFor={`endDate-${keySuffix}`}>End Date</label>
+        <input
+          type="date"
+          className="input-form"
+          id={`endDate-${keySuffix}`}
+          value={experience?.endDate ?? ''}
+          onChange={(e) => handleExperienceChange(e, index, "endDate")}
+        />
+      </div>
+    </div>
+  );
+})}
             <button type="button" onClick={addExperience} style={{ color: '#FFFFFF', backgroundColor: '#1967d2' }}>
               +
             </button>
@@ -1390,55 +1219,73 @@ const handleCloseSnackbar = () => {
         </div>
         <div className="form-box  wg-box">
   <fieldset className="">
-    <label className="title-user fw-7">Skills</label>
-    {skillsRequired && skillsRequired.length > 0 ? ( 
-      skillsRequired.map((skill, index) => (
-        <div key={index} className="experience-table">
-                <div>
-                  <label className="title-user fw-7">Your Skill</label>
-                  <input
-                    type="text"
-                    placeholder="Java"
-                    className="input-form"
-                    value={skill.skillName}
-                    onChange={(e) => handleSkillChange(e, index, "skillName")}
-                    onBlur={() => validateForm("skillName")}
-                  />
-                  {errors.skillsRequired[index]?.skillName && (
-                    <div className="error-message">{errors.skillsRequired[index].skillName}</div>
-                  )}
-                </div>
-                <div>
-                  <label className="title-user fw-7">Your Experience</label>
-                  <input
-                    type="text"
-                    placeholder="5"
-                    className="input-form"
-                    value={skill.experience}
-                    onChange={(e) => handleSkillChange(e, index, "experience")}
-                    onBlur={() => validateForm("experience")}
-                  />
-                  {errors.skillsRequired[index]?.experience && (
-                    <div className="error-message">{errors.skillsRequired[index].experience}</div>
-                  )}
-                </div>
-                {index === skillsRequired.length - 1 && (
-                  <button type="button" onClick={addSkills} className="btn-3" style={{ color: '#FFFFFF', backgroundColor: '#1967d2' }}>
-                    +
-                  </button>
-                )}
-                {index === skillsRequired.length - 1 && (
-                  <button type="button" onClick={removeSkills} style={{ color: '#FFFFFF', backgroundColor: '#FF0000' }}>
-                    -
-                  </button>
-                )}
+    <p className="title-user fw-7">Skills</p>
+{skillsRequired && skillsRequired.length > 0 ? (
+  skillsRequired.map((skill, index) => {
+    const keySuffix = `${skill?.skillName ?? 'skill'}-${skill?.experience ?? index}`;
+    return (
+      <div key={keySuffix} className="experience-table">
+        <div>
+          <label className="title-user fw-7" htmlFor={`skillName-${keySuffix}`}>Your Skill</label>
+          <input
+            id={`skillName-${keySuffix}`}
+            type="text"
+            placeholder="Java"
+            className="input-form"
+            value={skill?.skillName ?? ''}
+            onChange={(e) => handleSkillChange(e, index, "skillName")}
+            onBlur={() => validateForm("skillName")}
+          />
+          {errors.skillsRequired?.[index]?.skillName && (
+            <div className="error-message">{errors.skillsRequired[index].skillName}</div>
+          )}
         </div>
-      ))
-    ) : (
+
+        <div>
+          <label className="title-user fw-7" htmlFor={`experience-${keySuffix}`}>Your Experience</label>
+          <input
+            id={`experience-${keySuffix}`}
+            type="text"
+            placeholder="5"
+            className="input-form"
+            value={skill?.experience ?? ''}
+            onChange={(e) => handleSkillChange(e, index, "experience")}
+            onBlur={() => validateForm("experience")}
+          />
+          {errors.skillsRequired?.[index]?.experience && (
+            <div className="error-message">{errors.skillsRequired[index].experience}</div>
+          )}
+        </div>
+
+        {index === skillsRequired.length - 1 && (
+          <>
+            <button
+              type="button"
+              onClick={addSkills}
+              className="btn-3"
+              style={{ color: '#FFFFFF', backgroundColor: '#1967d2' }}
+            >
+              +
+            </button>
+            <button
+              type="button"
+              onClick={removeSkills}
+              style={{ color: '#FFFFFF', backgroundColor: '#FF0000' }}
+            >
+              -
+            </button>
+          </>
+        )}
+      </div>
+    );
+  })
+) 
+: (
       <div className="experience-table">
         <div>
-          <label className="title-user fw-7">Your Skill</label>
+          <label className="title-user fw-7" htmlFor="skillName">Your Skill</label>
           <input
+            id="skillName"
             type="text"
             placeholder="Java"
             className="input-form"
@@ -1451,8 +1298,9 @@ const handleCloseSnackbar = () => {
           )}
         </div>
         <div>
-          <label className="title-user fw-7">Your Experience</label>
+          <label className="title-user fw-7" htmlFor="experience">Your Experience</label>
           <input
+            id="experience"
             type="text"
             placeholder="5"
             className="input-form"
