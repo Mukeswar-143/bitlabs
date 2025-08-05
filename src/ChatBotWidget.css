@@ -2,9 +2,9 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #F97316; 
+  background-color: #F97316;
   color: white;
-  border: none; 
+  border: none;
   border-radius: 50%;
   padding: 15px;
   font-size: 22px;
@@ -12,7 +12,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   transition: background-color 0.3s, transform 0.2s;
-  outline: none; 
+  outline: none;
 }
 
 .chatbox {
@@ -64,13 +64,13 @@
 }
 
 .bubble-content {
+  max-width: 270px;
   background-color: #ece9fc;
   padding: 10px 14px;
   border-radius: 14px;
   font-size: 14px;
   white-space: pre-wrap;
   word-wrap: break-word;
-  max-width: 270px;
 }
 
 .chat-bubble.user .bubble-content {
@@ -84,7 +84,7 @@
   padding: 10px;
   background: #fff;
 }
-/* update */
+
 .chat-input-area textarea {
   flex: 1;
   border: none;
@@ -95,7 +95,7 @@
   outline: none;
   max-height: 45px;
   overflow-y: auto;      
-  scrollbar-width: none; 
+  scrollbar-width: none;
   resize: none;
 }
 
@@ -103,15 +103,6 @@
   display: none;
 }
 
-.chat-input-area button {
-  background: #F97316;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 0 16px;
-  cursor: pointer;
-  font-size: 16px;
-}
 /* update */
 .chat-input-area .button-cancel {
   background: #F97316;
@@ -123,6 +114,15 @@
   font-size: 12px;
 }
 
+.chat-input-area button {
+  background: #F97316;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 0 16px;
+  cursor: pointer;
+  font-size: 16px;
+}
 
 
 

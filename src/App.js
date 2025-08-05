@@ -3,6 +3,7 @@ import './App.css';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import IndexPage from './pages/indexpage/IndexPage';
+import AboutPage from './pages/aboutpage/AboutPage';
 import ContactPage from './pages/contactpage/ContactPage';
 import LoginPage from './pages/loginpage/LoginPage';
 import FindJobPage from './pages/loginpage/FindJobPage';
@@ -60,6 +61,7 @@ function App() {
               <Route path="/find-jobs-login" element={<FindJobPage onLogin={handleLogin} />} />
               <Route path="/find-candidates-login" element={<FindCandidatesPage onLogin={handleLogin} />} />
               <Route path="/find-candidates" element={<IndexPage />} />
+              <Route path="/aboutus" element={<AboutPage />} />
               <Route path="/contactus" element={<ContactPage />} />
               <Route path="/candidate" element={<LoginPage onLogin={handleLogin} />} />
               <Route path="/applicant-forgot-password" element={<ApplicantForgotPasswordPage />} />

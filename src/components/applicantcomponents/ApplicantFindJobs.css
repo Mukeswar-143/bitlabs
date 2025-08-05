@@ -26,8 +26,6 @@
     background: white;
     color:#EA670C;
 }
-
-
  
 @media (min-width: 1000px) and (max-width: 1440px) {
     .col-lg-9 {
