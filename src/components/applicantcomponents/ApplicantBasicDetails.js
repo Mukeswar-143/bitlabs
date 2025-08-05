@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ApplicantAPIService, { apiUrl } from '../../services/ApplicantAPIService';
 import { useUserContext } from '../common/UserProvider';
 import { useNavigate,useParams } from 'react-router-dom';
 import 'react-international-phone/style.css';
@@ -9,6 +10,7 @@ import { ClipLoader } from 'react-spinners';
 import './ApplicantBasicDetails.css';
 import './ApplicantBasicDetails1.css';
 import Logo from '../../images/artboard.svg';
+import 'react-bootstrap-typeahead/css/Typeahead.css'; 
 import ModalComponent from './ModalComponent';
 import ModalWrapper1 from './ModalWrapper1';
 import ResumeBuilder from './ResumeBuilder';
@@ -21,20 +23,26 @@ const ApplicantBasicDetails = () => {
   number = parseInt(number, 10);
   const [isExperienceMenuOpen, setIsExperienceMenuOpen] = useState(false);
   const [isLocationMenuOpen, setIsLocationMenuOpen] = useState(false);
+  const [isSkillsMenuOpen, setIsSkillsMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [currentStage, setCurrentStage] = useState(number);
   const [snackbars, setSnackbars] = useState([]);
-  const [error, ] = useState('');
-  const [isFormValid, ] = useState(false);
+  const [error, setError] = useState('');
+  const [isNextDisabled, setIsNextDisabled] = useState(true);
+  const [isFormValid, setIsFormValid] = useState(false);
+  const[imageSrc, setImageSrc]= useState();
+  const [shouldBeHidden, setShouldBeHidden] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const [resumeUploaded, setResumeUploaded] = useState(false);
+  const [isResponseSubmitted, setResponseSubmitted] = useState(false);
   const [applicant, setApplicant] = useState({
     firstName: '',
     lastName: '',
     email: user.email || "",
     mobilenumber: user.mobilenumber || "",
   });
+  const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   const basicDetails = {
     firstName: applicant.firstName,
@@ -42,7 +50,12 @@ const ApplicantBasicDetails = () => {
     alternatePhoneNumber: applicant.mobilenumber,
     email: applicant.email,
   };
+  const applicantProfileDTO = {
+    basicDetails: basicDetails,
+  };
   const [errors, setErrors] = useState({});
+
+
   const handleQualificationChange = (selected) => {
     setQualification(selected[0] || null);
     setSpecialization(null);
@@ -123,8 +136,8 @@ const handlePreferredJobLocationsChange = (selected) => {
   const [state, setState] = useState('');
   const [qualification, setQualification] = useState('');
   const [specialization, setSpecialization] = useState('');
-  const [, setSelectedCities] = useState([]);
-  const [, setSelectedSkills] = useState([]);
+  const [selectedCities, setSelectedCities] = useState([]);
+  const [selectedSkills, setSelectedSkills] = useState([]);
   const [preferredJobLocations, setPreferredJobLocations] = useState([]);
   const [skillsRequired, setSkillsRequired] = useState([]);
   const navigate = useNavigate();
@@ -148,12 +161,17 @@ const handlePreferredJobLocationsChange = (selected) => {
     const setFavicon = (url) => {
       let link = document.querySelector("link[rel*='icon']");
 
+      // if (!link) {
+      //   link = document.createElement('link');
+      //   link.rel = 'icon';
+      //   document.head.appendChild(link);
+      // }
 
       link.type = 'image/png';
       link.href = url;
     };
     console.log("image inserted ")
-    setFavicon('/images/favicon.png'); 
+    setFavicon('/images/favicon.png'); // Path to your favicon
   }, []);
 
 
@@ -189,7 +207,9 @@ const validateForm1 = () => {
   if (!applicant.firstName) {
     newErrors.firstName = "First name is required";
 } else {
+    if (!validateInput('firstName', applicant.firstName)) {
         newErrors.firstName = errors.firstName;
+    }
 }
 
 if (!applicant.lastName) {
@@ -214,6 +234,14 @@ if (!applicant.mobilenumber) {
 };
 
 
+  const makeApiCall1 = async () => {
+    if (!validateForm1()) {
+      console.log(" returned in validation");
+      return false;
+    }
+   
+  };
+
  
   
   const makeApiCall2 = async () => {
@@ -234,7 +262,21 @@ if (!applicant.mobilenumber) {
     }
     try {
       const jwtToken = localStorage.getItem('jwtToken');
-      console.log(" returned during api call"); 
+      console.log(" returned during api call");
+     
+      // const putProfileResponse = await axiosInstance.post(
+      //   `${apiUrl}/applicantprofile/createprofile/${user.id}`,
+      //   applicantProfileDTO,
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${jwtToken}`,
+      //     },
+      //   }
+      // );
+      // console.log(" returned after api call");
+ 
+     // Transform the payload
+ 
      const putProfileResponse = await axios.post(
       `${apiUrl}/applicantprofile/createprofile/${user.id}`,
       applicantProfileDTO,
@@ -248,7 +290,7 @@ if (!applicant.mobilenumber) {
     console.log("Profile successfully created in the system.");
  
  
-  const MAX_RETRIES = 50; 
+  const MAX_RETRIES = 50; // Maximum retry attempts
 let retryCount = 0;
  
 async function updateZohoCRM() {
@@ -260,6 +302,7 @@ async function updateZohoCRM() {
         First_Name: basicDetails.firstName,
         Email: basicDetails.email,
         Phone: basicDetails.alternatePhoneNumber,
+        // Lead_Status: "completed profile",
         Status_TS: "Completed Profile",
         Industry: "Software",
         Technical_Skills: applicantProfileDTO.skillsRequired
@@ -320,7 +363,27 @@ await updateZohoCRM();
  
 delete transformedApplicantProfileDTO.preferredJobLocations;
 delete transformedApplicantProfileDTO.skillsRequired;
-
+ 
+// const webhookUrl = 'https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjUwNTY1MDYzMjA0MzI1MjZjNTUzYzUxMzQi_pc';
+// const webhookPayload = {
+//   userId: user.id,
+//   profileData: transformedApplicantProfileDTO,
+// };
+ 
+// const webhookResponse = await fetch(webhookUrl, {
+//   method: 'POST',
+//   headers: {
+//       'Content-Type': 'application/json',
+//   },
+//   body: JSON.stringify(webhookPayload),
+// });
+ 
+//     if (!webhookResponse.ok) {
+//       throw new Error('Failed to send data to the webhook');
+//     }
+ 
+//     console.log('Webhook response:', await webhookResponse.json());
+ 
    
     } catch (error) {
       console.error('Error submitting form data:', error);
@@ -407,6 +470,61 @@ delete transformedApplicantProfileDTO.skillsRequired;
       document.getElementById('tf-upload-img').files = event.dataTransfer.files;
     }
   };
+
+  const handleResumeUpload = async () => {
+    try {
+      const jwtToken = localStorage.getItem('jwtToken');
+      const formData = new FormData();
+      formData.append('resume', resumeFile);
+      const response = await axios.post(
+        `${apiUrl}/applicant-pdf/${user.id}/upload`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        }
+      );
+      console.log(response.data);
+    
+      addSnackbar({ message: response.data, type: 'success' });
+      window.location.reload();
+    } catch (error) {
+      console.error('Error uploading resume:', error);
+     
+     addSnackbar({ message: 'Error uploading resume. Please try again.', type: 'error' });
+    }
+  };
+
+  const handleResumeBuilder = async () => {
+    const apiUrl1 = 'https://resume.bitlabs.in:5173/api/auth/login';
+    if (requestData) {
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      };
+      fetch(apiUrl1, requestOptions)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          const loginUrl = `https://resume.bitlabs.in:5173/auth/login?identifier=${encodeURIComponent(requestData.identifier)}&password=${encodeURIComponent(requestData.password)}`;
+          setLoginUrl(loginUrl);
+          
+          setIsModalOpen(true);
+        })
+        .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+        });
+    }
+  };
+
   const validateFields = () => {
     const newErrors = {};
     
@@ -437,7 +555,8 @@ delete transformedApplicantProfileDTO.skillsRequired;
           break;
         case 2:
 
-        if (validateFields()) { 
+        if (validateFields()) {
+          const response2 = await makeApiCall2(); 
           console.log('API call 2 response:');
         } else {
           return false;
@@ -481,6 +600,7 @@ delete transformedApplicantProfileDTO.skillsRequired;
       const jwtToken = localStorage.getItem('jwtToken');
       const formData = new FormData();
       formData.append('resume', resumeFile);
+      setResponseSubmitted(true);
       const response = await axios.post(
         `${apiUrl}/applicant-pdf/${user.id}/upload`,
 
@@ -502,12 +622,34 @@ delete transformedApplicantProfileDTO.skillsRequired;
       
     } catch (error) {
       console.error('Error uploading resume:', error);
-      
-      addSnackbar({ message: 'Error uploading resume. Please try again.', type: 'error' });
-    }
+      setResponseSubmitted(false);
+      setResumeUploaded(false);
+      if (error.code === 'ERR_NETWORK') {
+        addSnackbar({ message: 'Please check your network and try again.', type: 'error' });
+      }
+      else{
+        addSnackbar({ message: 'Error uploading resume. Please try again.', type: 'error' });
+      }    }
     resetForm();
    
    
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (currentStage === 1) {
+      if (!applicant.name) newErrors.name = 'Name is required';
+      if (!applicant.email) newErrors.email = 'Email is required';
+      if (!applicant.mobilenumber) newErrors.mobilenumber = 'Mobile number is required';
+      if (!experience) newErrors.experience = 'Experience is required';
+    } else if (currentStage === 2) {
+      if (!qualification) newErrors.qualification = 'Qualification is required';
+      if (!specialization) newErrors.specialization = 'Specialization is required';
+      if (!preferredJobLocations.length) newErrors.preferredJobLocations = 'At least one job location is required';
+      if (!skillsRequired.length) newErrors.skillsRequired = 'At least one skill is required';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const resetForm = () => {
@@ -703,30 +845,29 @@ delete transformedApplicantProfileDTO.skillsRequired;
                     }}
                   >
                     {results.map((option, index) => (
-                    <li
-  key={option.label} 
-  role="button"     
-  tabIndex={0}       
-  onClick={() => handleExperienceClick(option.label)}
-  onKeyDown={(e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      handleExperienceClick(option.label);
-    }
-  }}
-  style={{
-    padding: '3px 7px',
-    fontSize: '16px',
-    fontWeight: option.label === experience ? 'bold' : 'normal',
-    cursor: 'pointer',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  }}
->
-  {option.label}
-</li>
-
+                      <li
+                        key={index}
+                        onClick={() => {
+                          setExperience(option.label);
+                          setIsExperienceMenuOpen(false);
+                          // Optional blur
+                          setTimeout(() => {
+                            const inputEl = document.querySelector('#experience input');
+                            if (inputEl) inputEl.blur();
+                          }, 0);
+                        }}
+                        style={{
+                          padding: '3px 7px',
+                          fontSize: '16px',
+                          fontWeight: option.label === experience ? 'bold' : 'normal',
+                          cursor: 'pointer',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                        }}
+                      >
+                        {option.label}
+                      </li>
                     ))}
                   </ul>
                 )}
@@ -750,7 +891,7 @@ delete transformedApplicantProfileDTO.skillsRequired;
            onChange={(selected) => {
                   handlePreferredJobLocationsChange(selected);
                   if (selected.length < preferredJobLocations.length) {
-                    setTimeout(() => setIsLocationMenuOpen(true), 160); 
+                    setTimeout(() => setIsLocationMenuOpen(true), 160); // Delay to override blur
                   } else {
                     setIsLocationMenuOpen(false);
                   }
@@ -759,7 +900,7 @@ delete transformedApplicantProfileDTO.skillsRequired;
                 className="input-form typeahead"
                 inputProps={{}}
                 onInputChange={() => {
-                  setIsLocationMenuOpen(true);
+                  setIsLocationMenuOpen(true); // Keep dropdown open on typing
                 }}
                 filterBy={(option) => !preferredJobLocations.includes(option)}
                 labelKey={(option) => option}
@@ -1027,11 +1168,7 @@ delete transformedApplicantProfileDTO.skillsRequired;
   <button
     type="submit"
     className="form-button"
-    disabled={!resumeUploaded}
-    style={{
-      opacity: resumeUploaded ? 1 : 0.6,
-      cursor: resumeUploaded ? 'pointer' : 'not-allowed',
-    }}
+    disabled={!resumeUploaded || isResponseSubmitted}
   >
     Submit
   </button>

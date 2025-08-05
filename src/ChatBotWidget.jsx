@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import './ChatBotWidget.css'; // Make sure this CSS file exists
 import { apiUrl } from './services/ApplicantAPIService.js'; // Adjust the import path as necessary
-
+ 
 const ChatBotWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(null);//update
@@ -13,10 +13,10 @@ const ChatBotWidget = () => {
   const [loading, setLoading] = useState(false);
   const chatRef = useRef(null);
   const chatIconRef = useRef(null);
-
-
+ 
+ 
   const toggleChat = () => setIsOpen(!isOpen);
-
+ 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -28,25 +28,25 @@ const ChatBotWidget = () => {
         setIsOpen(false);
       }
     };
-
-
+ 
+ 
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     } else {
       document.removeEventListener('mousedown', handleClickOutside);
     }
-
+ 
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isOpen]);
-
+ 
   const sendMessage = async () => {
     if (!input.trim()) return;
-
+ 
     const userMsg = { sender: 'user', text: input };
     setMessages((prev) => [...prev, userMsg]);
     setInput('');
     setLoading(true);
-
+ 
     //update
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
@@ -63,6 +63,7 @@ const ChatBotWidget = () => {
       const botReply = res.data.candidates[0].content.parts[0].text;
       setMessages((prev) => [...prev, { sender: 'bot', text: botReply }]);
     } catch (error) {
+      console.error('Error fetching response:', error);
       //update
       if (axios.isCancel(error)) {
         setMessages((prev) => [...prev, { sender: 'bot', text: 'Cancelled.' }]);
@@ -82,10 +83,10 @@ const ChatBotWidget = () => {
       setCancelTokenSource(null);
     }
   };
-
+ 
   return (
     <>
-
+      {/* Chat Icon Button */}
  <button
   className="chat-icon"
   ref={chatIconRef}
@@ -113,7 +114,7 @@ const ChatBotWidget = () => {
           </g>
         </svg>
       </button>
-
+ 
       {/* Chat Window */}
       {isOpen && (
         <div className="chatbox" ref={chatRef}>
@@ -139,7 +140,7 @@ const ChatBotWidget = () => {
                 <polyline points="23 4 23 10 17 10" />
                 <path d="M20.49 15A9 9 0 1 1 23 10" />
               </svg>
-
+ 
               {/* Close Button */}
               <svg
                 onClick={() => setIsOpen(false)}
@@ -165,7 +166,7 @@ const ChatBotWidget = () => {
                 <div className="bubble-content">{msg.text}</div>
               </div>
             ))}
-
+ 
             {loading && (
               <div className="chat-bubble bot">
                 <div className="bubble-content">Thinking...</div>
@@ -198,5 +199,6 @@ const ChatBotWidget = () => {
     </>
   );
 };
-
+ 
 export default ChatBotWidget;
+ 

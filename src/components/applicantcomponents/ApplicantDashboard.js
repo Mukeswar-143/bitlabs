@@ -1,25 +1,38 @@
+import React from "react";
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import { useUserContext } from '../common/UserProvider';
-import { apiUrl } from '../../services/ApplicantAPIService';
-import { useNavigate , Link , useLocation } from "react-router-dom";
+import ApplicantAPIService, { apiUrl } from '../../services/ApplicantAPIService';
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Resume from '../../images/user/avatar/Resume.png';
 import Certificate from '../../images/user/avatar/Certificate.png';
 import Taketest from '../../images/user/avatar/Taketest.png';
+import { useLocation } from "react-router-dom";
+import { faL } from "@fortawesome/free-solid-svg-icons";
+import ModalWrapper from './ModalWrapper';
+import Button from '@mui/material/Button';
+import ResumeBuilder from './ResumeBuilder';
 import SmartPhone from "../../images/dashboard/mobilebanners/smartphone.png"
 import appStoreIcon from "../../images/dashboard/mobilebanners/appstoreicon.png";
 import playStore from "../../images/dashboard/mobilebanners/playstore.png";
  
  
 const ApplicantDashboard = () => {
+  const [token, setToken] = useState('');
   const { user } = useUserContext();
   const [loading, setLoading] = useState(true);
-  const [contRecJobs, setCountRecJobs] = useState("0");
+  const [contRecJobs, setCountRecJobs] = useState(0);
   const [contAppliedJob, setAppliedJobs] = useState(0);
   const [contSavedJobs, setSavedJobs] = useState(0);
   const navigate = useNavigate();
+  const [profileid1, setprofileid] = useState();
   const userId = user.id;
   const [isHovered, setIsHovered] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   const [isWideScreen, setIsWideScreen] = useState(false);
   const [hiredCount, setHiredCount] = useState(null);
  
@@ -130,7 +143,14 @@ const ApplicantDashboard = () => {
     fetchUserData();
   }, []);
  
-
+ 
+ 
+  useEffect(() => {
+    const storedToken = localStorage.getItem('jwtToken');
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {

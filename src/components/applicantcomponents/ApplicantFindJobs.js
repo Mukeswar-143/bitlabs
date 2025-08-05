@@ -137,28 +137,15 @@ const handlePageClick = (pageNum) => {
       addSnackbar({ message: "Error saving job. Please try again later.", type: "error" });
     }
   };
-  
-  const handleApplyNowClick = (jobId) => {
-    setSelectedJobId(jobId);
-    // navigate('/applicant-view-job', { state: { from: location.pathname } });
-  };
- 
 
   const handleApplyNowClickView = (jobId) => {
     setSelectedJobId(jobId);
-    navigate('/applicant-view-job', { state: { from: location.pathname } });
+    navigate(`/applicant-view-job?jobId=${jobId}`, { state: { from: location.pathname } });
   };
 
   const handleCloseSnackbar = (index) => {
     setSnackbars((prevSnackbars) => prevSnackbars.filter((_, i) => i !== index));
   };
-
-   function formatDate(dateString) {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
-    return formattedDate;
-  }
-
   return (
     <div>
      {loading ? null : (
@@ -189,7 +176,7 @@ const handlePageClick = (pageNum) => {
                       ) : (
                         jobs.map((job) => (
                           <div className="features-job cl2 bg-white" key={job.id} onClick={(e) => {
-                            handleApplyNowClick(job.id, e);
+    
                             setSelectedJobId(job.id);
                         }}
                          >
@@ -231,7 +218,7 @@ const handlePageClick = (pageNum) => {
                               <div className="job-footer-right">
                                 <div className="price">
                                   <span>
-                                    <span style={{ fontSize: "12px" }}>Posted on {formatDate(job.creationDate)}</span>
+                                    <span style={{ fontSize: "12px" }}>Posted on {new Date(job.creationDate).toLocaleDateString()}</span>
                                   </span>
                                 </div>
                                 <ul className="job-tag">
