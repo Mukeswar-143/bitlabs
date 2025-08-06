@@ -1,0 +1,163 @@
+.compiler-wrapper {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.compiler-left {
+  width: 35%;
+  padding: 20px;
+  background-color: #f8f8f8;
+  overflow-y: auto;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.compiler-right {
+  width: 65%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.compiler-left .compiler-top-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.compiler-top-buttons button {
+  background-color: #fff;
+  color:#F97316;
+  border: solid 1px #F97316;
+  font-weight: 600;
+  height: 40px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.compiler-top-buttons button:hover {
+  background-color: #F97316;
+  color: white;
+}
+.compiler-top-buttons .back-next {
+  display: flex;
+  gap: 30px;
+}
+.compiler-left .question-name {
+  padding-top: 20px;
+  font-weight: 700;
+  font-size: 35px;
+  color: #222;
+  border-bottom: 1px solid #eba97a;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.compiler-left .problem-statement {
+  padding-top: 10px;
+  font-size: 20px;
+  color: #444;
+  line-height: 1.6;
+  border-bottom: 1px solid #eba97a;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+.compiler-left .complexity,.compiler-left .constraints {
+  font-size: 20px;
+  color: #555;
+  margin-top: 10px;
+  border-bottom: 1px solid #eba97a;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+.compiler-left .test-inputs {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.language-selector {
+  margin-bottom: 10px;
+}
+
+.code-editor {
+  width: 100%;
+  font-family: monospace;
+  font-size: 14px;
+  flex-grow: 1;
+  margin-bottom: 10px;
+}
+
+.compiler-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.run-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.submit-btn {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.compiler-right .output-section {
+  margin-top: 20px;
+}
+.output-section p {
+  font-weight: bold;
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+.output-box {
+  background-color: #f4f4f4;
+  padding: 10px;
+  border: 1px solid #ddd;
+  white-space: pre-wrap;
+}
+
+.code-editor-container {
+  display: flex;
+  font-family: monospace;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  max-width: 100%;
+  background-color: #f5f5f5;
+}
+
+.line-numbers {
+  background-color: #eee;
+  color: #666;
+  padding: 10px;
+  text-align: right;
+  user-select: none;
+  font-size: 14px;
+  line-height: 20px;
+  border-right: 1px solid #ccc;
+}
+
+.compiler-right .code-editor {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  outline: none;
+  resize: none;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 20px;
+  background-color: #fdfdfd;
+}
+

@@ -551,6 +551,10 @@ delete transformedApplicantProfileDTO.skillsRequired;
                   'Interior Designing','Fashion Designing','Hotel Management and Catering Technology','Pharmacy','Medical Laboratory Technology',
                  'Radiology and Imaging Technology'],  
   };
+  const handleExperienceClick = (selectedExperience) => {
+  setExperience(selectedExperience);
+  setIsExperienceMenuOpen(false);
+};
 
   const renderStageFields = () => {
     switch (currentStage) {
