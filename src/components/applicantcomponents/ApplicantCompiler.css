@@ -1,22 +1,22 @@
+/* Global Wrapper */
 .compiler-wrapper {
   display: flex;
   height: 100vh;
   font-family: Arial, sans-serif;
+  background-color: #eff2f6;
 }
 
+/* Left Pane */
 .compiler-left {
-  width: 35%;
+  width: 30%;
   padding: 20px;
-  background-color: #f8f8f8;
+  border-radius: 10px;
+  background-color: white;
   overflow-y: auto;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-.compiler-right {
-  width: 65%;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
+  margin: 0.5%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: solid 1px #ddd;
 }
 
 .compiler-left .compiler-top-buttons {
@@ -24,9 +24,10 @@
   justify-content: space-between;
   margin-bottom: 10px;
 }
+
 .compiler-top-buttons button {
   background-color: #fff;
-  color:#F97316;
+  color: #F97316;
   border: solid 1px #F97316;
   font-weight: 600;
   height: 40px;
@@ -35,14 +36,17 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
+
 .compiler-top-buttons button:hover {
   background-color: #F97316;
   color: white;
 }
+
 .compiler-top-buttons .back-next {
   display: flex;
   gap: 30px;
 }
+
 .compiler-left .question-name {
   padding-top: 20px;
   font-weight: 700;
@@ -62,7 +66,9 @@
   padding-bottom: 10px;
   margin-bottom: 15px;
 }
-.compiler-left .complexity,.compiler-left .constraints {
+
+.compiler-left .complexity,
+.compiler-left .constraints {
   font-size: 20px;
   color: #555;
   margin-top: 10px;
@@ -70,30 +76,108 @@
   padding-bottom: 10px;
   margin-bottom: 15px;
 }
+
 .compiler-left .test-inputs {
   margin-top: 20px;
   padding: 10px;
-  background-color: #fff;
+  background-color: #e4dfdf;
   border-radius: 5px;
   font-size: 20px;
 }
 
+/* Language Selector */
 .language-selector {
+  width: 100%;
+  height: 7%;
   margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.language-selector .language-label {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.language-selector select {
+  width: auto;
+  min-width: 100px;
+  height: 40px;
+  padding: 4px 6px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+/* Right Pane */
+.compiler-right {
+  width: 65%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 10px;
+  margin: 0.5%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: solid 1px #ddd;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+/* Code Editor + Line Numbers */
+.editor-wrapper {
+  display: flex;
+  width: 100%;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: monospace;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.line-numbers {
+  padding: 10px;
+  background-color: #eee;
+  color: #666;
+  text-align: right;
+  user-select: none;
+  border-right: 1px solid #ccc;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.line-number {
+  height: 20px;
+  line-height: 20px;
 }
 
 .code-editor {
   width: 100%;
-  font-family: monospace;
+  padding: 10px;
   font-size: 14px;
-  flex-grow: 1;
-  margin-bottom: 10px;
+  border: none;
+  outline: none;
+  resize: none;
+  line-height: 20px;
+  background-color: #fdfdfd;
+  height: 500px;
+  overflow-y: auto;
+  font-family: monospace;
 }
 
+.code-editor:focus {
+  border: 1px solid #946713;
+}
+
+/* Buttons */
 .compiler-buttons {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  margin-top: 10px;
 }
 
 .run-btn {
@@ -102,6 +186,7 @@
   color: white;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .submit-btn {
@@ -110,11 +195,18 @@
   color: white;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 }
 
+/* Output Section */
 .compiler-right .output-section {
   margin-top: 20px;
+  height: 250px;
+  overflow-y: auto;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
 }
+
 .output-section p {
   font-weight: bold;
   font-size: 25px;
@@ -126,38 +218,23 @@
   padding: 10px;
   border: 1px solid #ddd;
   white-space: pre-wrap;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  height: 130px;
+  overflow-y: auto;
 }
 
-.code-editor-container {
-  display: flex;
-  font-family: monospace;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  overflow: hidden;
-  max-width: 100%;
-  background-color: #f5f5f5;
+.output-box strong {
+  font-size: 15px;
 }
-
-.line-numbers {
-  background-color: #eee;
-  color: #666;
-  padding: 10px;
-  text-align: right;
-  user-select: none;
-  font-size: 14px;
-  line-height: 20px;
-  border-right: 1px solid #ccc;
+.output-section p{
+  margin: 0;
+  font-size: 20px;
+  color: #333;
 }
-
-.compiler-right .code-editor {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  outline: none;
-  resize: none;
-  font-family: monospace;
-  font-size: 14px;
-  line-height: 20px;
-  background-color: #fdfdfd;
+.output-section h2{
+  margin: 0;
+  font-size: 25px;
+  color: #333;
+  padding-bottom: 10px;
 }
-

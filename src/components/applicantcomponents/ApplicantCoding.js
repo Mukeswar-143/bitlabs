@@ -64,7 +64,7 @@ const ApplicantCoding = () => {
             className="button-success"
             onClick={() => handleSolve(question.id)}
           >
-            Solve
+            {question.submitStatus ? "Solved" : "Solve"}
           </button>
         </div>
       ))}

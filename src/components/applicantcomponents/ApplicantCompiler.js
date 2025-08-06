@@ -4,6 +4,7 @@ import "./ApplicantCompiler.css";
 import axios from "axios";
 import { apiUrl } from "../../services/ApplicantAPIService";
 import { useUserContext } from '../common/UserProvider';
+import { set } from "react-ga";
 
 const ApplicantCompiler = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const ApplicantCompiler = () => {
   const [code, setCode] = useState(getDefaultCode("java"));
   const [testCases, setTestCases] = useState([]);
   const [visibleInput, setVisibleInput] = useState("");
+  const [visibleOutput, setVisibleOutput] = useState("");
   const [outputs, setOutputs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [questionData, setQuestionData] = useState(null);
@@ -48,6 +50,7 @@ const ApplicantCompiler = () => {
       const allTestCases = data.testCases.filter(Boolean);
       setTestCases(allTestCases);
       setVisibleInput(visibleCase?.sampleInput || "");
+      setVisibleOutput(visibleCase?.expectedOutput || "");
       setOutputs([]);
     } catch (err) {
       console.error("Failed to load question data:", err);
@@ -88,43 +91,43 @@ const ApplicantCompiler = () => {
       setLoading(false);
     }
   };
- const handleSubmit = async () => {
-  let passCount = 0;
+  const handleSubmit = async () => {
+    let passCount = 0;
 
-  testCases.forEach((tc, idx) => {
-    const expected = normalize(tc.expectedOutput || "");
-    const actual = normalize(outputs[idx] || "");
-    if (expected === actual) passCount++;
-  });
+    testCases.forEach((tc, idx) => {
+      const expected = normalize(tc.expectedOutput || "");
+      const actual = normalize(outputs[idx] || "");
+      if (expected === actual) passCount++;
+    });
 
-  const total = testCases.length;
-  const calculatedScore = Math.round((passCount / total) * 100);
-  setScore(calculatedScore);
+    const total = testCases.length;
+    const calculatedScore = Math.round((passCount / total) * 100);
+    setScore(calculatedScore);
 
-  const payload = {
-    applicantId: user.id, // Replace with dynamic value if needed
-    questionId: questionData.id,   // Replace with dynamic value if needed
-    code: code,         // Code written by user
-    language: language, // Language selected
-    score: calculatedScore,
+    const payload = {
+      applicantId: user.id, // Replace with dynamic value if needed
+      questionId: questionData.id,   // Replace with dynamic value if needed
+      code: code,         // Code written by user
+      language: language, // Language selected
+      score: calculatedScore,
+    };
+
+    try {
+      await axios.post(
+        `${apiUrl}/codingQuestions/submit`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Assuming you're using auth
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("Error submitting code: " + (error.response?.data?.message || error.message));
+    }
   };
-
-  try {
-    await axios.post(
-      `${apiUrl}/codingQuestions/submit`,
-      payload,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Assuming you're using auth
-        },
-      }
-    );
-  } catch (error) {
-    console.error("Submission error:", error);
-    alert("Error submitting code: " + (error.response?.data?.message || error.message));
-  }
-};
 
 
   const handleClose = () => {
@@ -164,6 +167,9 @@ const ApplicantCompiler = () => {
             <div className="test-inputs">
               <strong>Sample Input:</strong> {visibleInput || "N/A"}
             </div>
+            <div className="test-inputs">
+              <strong>Sample Output:</strong> {visibleOutput || "N/A"}
+            </div>
           </>
         )}
       </div>
@@ -171,31 +177,40 @@ const ApplicantCompiler = () => {
       {/* Right Panel */}
       <div className="compiler-right">
         <div className="language-selector">
-          <label>Select Language:</label>
-          <select value={language} onChange={handleLanguageChange}>
+          <label htmlFor="language-select" className="language-label">Select Language:</label>
+          <select id="language-select" value={language} onChange={handleLanguageChange}>
             <option value="java">Java</option>
             <option value="python">Python</option>
           </select>
         </div>
 
-        <textarea
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          rows={language === "java" ? 14 : 8}
-          className="code-editor"
-          placeholder="Write your code here..."
-        />
-
-        <div className="compiler-buttons">
-          <button
-            onClick={handleRunCode}
-            disabled={loading}
-            className="run-btn"
-          >
-            {loading ? "Running..." : "Run"}
-          </button>
-          <button className="submit-btn" onClick={handleSubmit}>Submit</button>
+        <div className="code-editor-section">
+          <div className="editor-wrapper">
+            <div className="line-numbers">
+              {code.split("\n").map((_, i) => (
+                <div key={i} className="line-number">{i + 1}</div>
+              ))}
+            </div>
+            <textarea
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              rows={language === "java" ? 20 : 15}
+              className="code-editor"
+              placeholder="Write your code here..."
+            />
+          </div>
+          <div className="compiler-buttons">
+            <button
+              onClick={handleRunCode}
+              disabled={loading}
+              className="run-btn"
+            >
+              {loading ? "Running..." : "Run"}
+            </button>
+            <button className="submit-btn" onClick={handleSubmit}>Submit</button>
+          </div>
         </div>
+
 
         <div className="output-section">
           {score !== null && (
@@ -205,53 +220,63 @@ const ApplicantCompiler = () => {
               </p>
             </div>
           )}
-          <p>Outputs:</p>
+          <h2>Outputs:</h2>
           {testCases.length === 0 ? (
             <p>No test cases available.</p>
           ) : outputs.length === 0 ? (
-            <p>No outputs yet.</p>
+            <p>Output will be displayed below after clicking Run.</p>
           ) : (
             testCases.map((tc, idx) => {
               const expected = normalize(tc.expectedOutput || "");
               const actual = normalize(outputs[idx] || "");
               const matched = expected === actual;
+              const isVisible = tc.visibility === "visible"; // assuming "visible" / "hidden"
 
               return (
                 <pre key={idx} className="output-box">
-                  <strong>Output {idx + 1}:</strong>
+                  <strong style={{ fontSize: "18px" }}>Output {idx + 1}:</strong>
                   <br />
                   {matched ? (
                     <>
-                      <div style={{ color: "green", fontWeight: "bold" }}>
+                      <div style={{ color: "green", fontWeight: "bold", fontSize: "18px" }}>
                         TestCase - {idx + 1} Passed
                       </div>
-                      <div>
-                        <strong>Expected:</strong> {expected || "No output"}
-                      </div>
-                      <div>
-                        <strong>Got:</strong> {actual || "No output"}
-                      </div>
+                      {isVisible && (
+                        <>
+                          <div>
+                            <strong>Expected:</strong> {expected || "No output"}
+                          </div>
+                          <div>
+                            <strong>Got:</strong> {actual || "No output"}
+                          </div>
+                        </>
+                      )}
                     </>
                   ) : (
                     <>
-                      <div style={{ color: "red", fontWeight: "bold" }}>
+                      <div style={{ color: "red", fontWeight: "bold", fontSize: "18px" }}>
                         TestCase - {idx + 1} Failed
                       </div>
-                      <div>
-                        <strong>Expected:</strong> {expected || "No output"}
-                      </div>
-                      <div>
-                        <strong>Got:</strong> {actual || "No output"}
-                      </div>
+                      {isVisible && (
+                        <>
+                          <div>
+                            <strong>Expected:</strong> {expected || "No output"}
+                          </div>
+                          <div>
+                            <strong>Got:</strong> {"Error occurred while running the code"}
+                          </div>
+                        </>
+                      )}
                     </>
                   )}
                 </pre>
               );
             })
           )}
-        </div>
 
+        </div>
       </div>
+
     </div>
   );
 };
