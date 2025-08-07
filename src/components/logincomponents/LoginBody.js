@@ -131,8 +131,8 @@ function LoginBody({ handleLogin }) {
             ],
           };
 
-          // const id = await handleLead(leadData);
-          // console.log("Zoho User ID from login page :", id);
+          const id = await handleLead(leadData);
+          console.log("Zoho User ID from login page :", id);
           // sessionStorage.setItem("zohoUserId", id);
     
 
