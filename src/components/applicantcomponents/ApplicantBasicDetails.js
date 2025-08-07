@@ -13,6 +13,7 @@ import ModalComponent from './ModalComponent';
 import ModalWrapper1 from './ModalWrapper1';
 import ResumeBuilder from './ResumeBuilder';
 import Snackbar from '../common/Snackbar';
+import { apiUrl } from "../../services/ApplicantAPIService";
 
 const ApplicantBasicDetails = () => {
   const { user } = useUserContext();

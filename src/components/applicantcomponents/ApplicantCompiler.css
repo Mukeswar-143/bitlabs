@@ -238,3 +238,132 @@
   color: #333;
   padding-bottom: 10px;
 }
+
+@media (max-width: 1440px), (max-height: 900px) {
+  .compiler-left {
+    width: 35%;
+  }
+
+  .compiler-right {
+    width: 62%;
+  }
+
+  .code-editor {
+    height: 420px;
+  }
+
+  .compiler-left .question-name {
+    font-size: 28px;
+  }
+}
+
+/* Medium Devices: Tablets and small laptops (1024x768) */
+@media (max-width: 1024px), (max-height: 768px) {
+  .compiler-wrapper {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .compiler-left,
+  .compiler-right {
+    width: 95%;
+    margin: 10px auto;
+    padding: 15px;
+  }
+
+  .code-editor {
+    height: 350px;
+  }
+
+  .compiler-left .question-name {
+    font-size: 24px;
+  }
+
+  .compiler-left .problem-statement,
+  .compiler-left .complexity,
+  .compiler-left .constraints,
+  .compiler-left .test-inputs {
+    font-size: 17px;
+  }
+
+  .output-section p {
+    font-size: 16px;
+  }
+}
+
+/* Small Devices: Phones and small tablets (768px & 600px height) */
+@media (max-width: 768px), (max-height: 600px) {
+  .compiler-wrapper {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .compiler-left,
+  .compiler-right {
+    width: 100%;
+    margin: 5px auto;
+    padding: 10px;
+  }
+
+  .language-selector {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .compiler-top-buttons .back-next {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .code-editor {
+    height: 280px;
+    font-size: 12px;
+  }
+
+  .output-box {
+    height: auto;
+    font-size: 13px;
+  }
+
+  .compiler-left .question-name {
+    font-size: 20px;
+  }
+
+  .compiler-left .problem-statement,
+  .compiler-left .complexity,
+  .compiler-left .constraints,
+  .compiler-left .test-inputs {
+    font-size: 15px;
+  }
+
+  .output-section p {
+    font-size: 14px;
+  }
+}
+
+/* Extra Small Devices (e.g., landscape phones) */
+@media (max-width: 480px), (max-height: 480px) {
+  .code-editor {
+    height: 220px;
+    font-size: 11px;
+  }
+
+  .compiler-left .question-name {
+    font-size: 18px;
+  }
+
+  .output-box {
+    font-size: 12px;
+  }
+
+  .compiler-left .problem-statement,
+  .compiler-left .complexity,
+  .compiler-left .constraints,
+  .compiler-left .test-inputs {
+    font-size: 14px;
+  }
+
+  .output-section p {
+    font-size: 13px;
+  }
+}
