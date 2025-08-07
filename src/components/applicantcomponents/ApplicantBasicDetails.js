@@ -13,6 +13,7 @@ import ModalComponent from './ModalComponent';
 import ModalWrapper1 from './ModalWrapper1';
 import ResumeBuilder from './ResumeBuilder';
 import Snackbar from '../common/Snackbar';
+import { apiUrl } from "../../services/ApplicantAPIService";
 
 const ApplicantBasicDetails = () => {
   const { user } = useUserContext();
@@ -551,6 +552,10 @@ delete transformedApplicantProfileDTO.skillsRequired;
                   'Interior Designing','Fashion Designing','Hotel Management and Catering Technology','Pharmacy','Medical Laboratory Technology',
                  'Radiology and Imaging Technology'],  
   };
+  const handleExperienceClick = (selectedExperience) => {
+  setExperience(selectedExperience);
+  setIsExperienceMenuOpen(false);
+};
 
   const renderStageFields = () => {
     switch (currentStage) {

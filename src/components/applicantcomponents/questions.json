@@ -1,0 +1,224 @@
+[
+  {
+    "questionNaumber": 1,
+    "questionName": "Final Balance Calculator",
+    "complexity": "Easy",
+    "constraints": "1 <= transactions.length <= 10^4; Each transaction is a valid signed integer as a string.",
+    "description": "A banking application receives strings representing account transactions in the format: '+100', '-50', '+200'. You must write a program to compute the final balance after processing all transactions.",
+    "testCases": [
+      {
+        "sampleInput": "transactions: ['+100', '-30', '+50']",
+        "expectedOutput": "120",
+        "visibility": "visible"
+      },
+      {
+        "sampleInput": "transactions: ['+500', '-100', '-200', '+150']",
+        "expectedOutput": "350",
+        "visibility": "hidden"
+      },
+      {
+        "sampleInput": "transactions: ['+0']",
+        "expectedOutput": "0",
+        "visibility": "hidden"
+      }
+    ]
+  },
+  {
+    "questionNaumber": 2,
+    "questionName": "Max Profit from Stock Prices",
+    "complexity": "Easy",
+    "constraints": "1 <= prices.length <= 10^5; 0 <= prices[i] <= 10^4",
+    "description": "A stock portfolio tracker maintains price changes of stocks in a list. You are to return the maximum profit possible by choosing a single day to buy and a later day to sell.",
+    "testCases": [
+      {
+        "sampleInput": "prices: [7, 1, 5, 3, 6, 4]",
+        "expectedOutput": "5",
+        "visibility": "visible"
+      },
+      {
+        "sampleInput": "prices: [7, 6, 4, 3, 1]",
+        "expectedOutput": "0",
+        "visibility": "hidden"
+      },
+      {
+        "sampleInput": "prices: [1, 2]",
+        "expectedOutput": "1",
+        "visibility": "hidden"
+      }
+    ]
+  },
+  {
+    "questionNaumber": 3,
+    "questionName": "First Non-Repeating Character",
+    "complexity": "Easy",
+    "constraints": "1 <= message.length <= 10^5; message contains only lowercase alphabets.",
+    "description": "Given a string message, return the first non-repeating character. If all characters repeat, return '_'.",
+    "testCases": [
+      {
+        "sampleInput": "message: 'customer'",
+        "expectedOutput": "c",
+        "visibility": "visible"
+      },
+      {
+        "sampleInput": "message: 'success'",
+        "expectedOutput": "u",
+        "visibility": "hidden"
+      },
+      {
+        "sampleInput": "message: 'aabbccdd'",
+        "expectedOutput": "_",
+        "visibility": "hidden"
+      },
+      {
+        "sampleInput": "message: 'developer'",
+        "expectedOutput": "d",
+        "visibility": "hidden"
+      }
+    ]
+  },
+  {
+    "questionNaumber": 4,
+    "questionName": "Reverse a Linked List",
+    "complexity": "Medium",
+    "constraints": "0 <= n <= 10^4",
+    "description": "Given the head of a singly linked list, reverse the list and return the reversed list's head.",
+    "testCases": [
+      {
+        "sampleInput": "head: [1, 2, 3, 4, 5]",
+        "expectedOutput": "[5, 4, 3, 2, 1]",
+        "visibility": "visible"
+      },
+      {
+        "sampleInput": "head: []",
+        "expectedOutput": "[]",
+        "visibility": "hidden"
+      },
+      {
+        "sampleInput": "head: [1]",
+        "expectedOutput": "[1]",
+        "visibility": "hidden"
+      }
+    ]
+  },
+  {
+    "questionNaumber": 5,
+    "questionName": "Check Palindrome",
+    "complexity": "Easy",
+    "constraints": "1 <= s.length <= 10^5",
+    "description": "Write a function that checks whether a given string is a palindrome (reads the same forward and backward).",
+    "testCases": [
+      {
+        "sampleInput": "s: 'madam'",
+        "expectedOutput": "true",
+        "visibility": "visible"
+      },
+      {
+        "sampleInput": "s: 'hello'",
+        "expectedOutput": "false",
+        "visibility": "hidden"
+      },
+      {
+        "sampleInput": "s: 'racecar'",
+        "expectedOutput": "true",
+        "visibility": "hidden"
+      }
+    ]
+  },
+  {
+    "questionNaumber": 6,
+    "questionName": "Sum of Digits",
+    "complexity": "Easy",
+    "constraints": "0 <= number <= 10^9",
+    "description": "Write a function that calculates the sum of digits of an integer.",
+    "testCases": [
+      {
+        "sampleInput": "number: 12345",
+        "expectedOutput": "15",
+        "visibility": "visible"
+      },
+      {
+        "sampleInput": "number: 0",
+        "expectedOutput": "0",
+        "visibility": "hidden"
+      },
+      {
+        "sampleInput": "number: 999",
+        "expectedOutput": "27",
+        "visibility": "hidden"
+      }
+    ]
+  },
+  {
+    "questionNaumber": 7,
+    "questionName": "Count Vowels",
+    "complexity": "Easy",
+    "constraints": "1 <= text.length <= 10^5",
+    "description": "Given a string, count the number of vowels (a, e, i, o, u) in it.",
+    "testCases": [
+      {
+        "sampleInput": "text: 'education'",
+        "expectedOutput": "5",
+        "visibility": "visible"
+      },
+      {
+        "sampleInput": "text: 'bcdfgh'",
+        "expectedOutput": "0",
+        "visibility": "hidden"
+      },
+      {
+        "sampleInput": "text: 'AEIOU'",
+        "expectedOutput": "5",
+        "visibility": "hidden"
+      }
+    ]
+  },
+  {
+    "questionNaumber": 8,
+    "questionName": "Calculate Factorial",
+    "complexity": "Medium",
+    "constraints": "0 <= n <= 20",
+    "description": "Write a program to compute the factorial of a given number n.",
+    "testCases": [
+      {
+        "sampleInput": "n: 5",
+        "expectedOutput": "120",
+        "visibility": "visible"
+      },
+      {
+        "sampleInput": "n: 0",
+        "expectedOutput": "1",
+        "visibility": "hidden"
+      },
+      {
+        "sampleInput": "n: 10",
+        "expectedOutput": "3628800",
+        "visibility": "hidden"
+      }
+    ]
+  },
+  {
+    "questionNaumber": 9,
+    "questionName": "Find Duplicate Numbers",
+    "complexity": "Medium",
+    "constraints": "1 <= nums.length <= 10^5; 0 <= nums[i] <= 10^5",
+    "description": "Given an array of integers, return all duplicates that appear more than once.",
+    "testCases": [
+      {
+        "sampleInput": "nums: [1, 2, 3, 2, 4, 5, 3]",
+        "expectedOutput": "[2, 3]",
+        "visibility": "visible"
+      },
+      {
+        "sampleInput": "nums: [1, 2, 3, 4]",
+        "expectedOutput": "[]",
+        "visibility": "hidden"
+      },
+      {
+        "sampleInput": "nums: [5, 5, 5, 5]",
+        "expectedOutput": "[5]",
+        "visibility": "hidden"
+      }
+    ]
+  }
+]
+ 

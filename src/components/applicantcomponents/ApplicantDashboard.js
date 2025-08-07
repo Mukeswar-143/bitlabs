@@ -87,11 +87,6 @@ const ApplicantDashboard = () => {
         const profileId = profileIdResponse.data;
  
  
-        if (profileId === 0) {
-          navigate('/applicant-basic-details-form');
-        } else {
-          setLoading(false);
-        }
       } catch (error) {
         console.error('Error fetching profile ID:', error);
       }
@@ -532,6 +527,61 @@ const ApplicantDashboard = () => {
                         <div className="resumecard-content">
                           <div className="resumecard-text">
                             <div className="resumecard-heading">
+                              <h2 className="heading1">  Join the Coding Challenge
+                                <span
+                                  style={{
+                                    color: '#F00', // Red text color
+                                    border: '1px solid var(--Color-2, #F00)', // Red border
+                                    borderRadius: '13px', // Rounded corners
+                                    padding: '3px 8px', // Spacing around text
+                                    marginLeft: '15px', // Space between "Verified badges" and "New"
+                                    fontSize: '10px', // Adjust font size as needed
+                                    // fontFamily:'Inter',
+                                    fontStyle: 'normal',
+                                    fontWeight: '500',
+                                    lineHeight: 'normal',
+                                  }}
+                                >
+                                  New
+                                </span>
+                              </h2>
+                              <div className="" style={{ fontSize: '16.8px', color: '#6F6F6F', fontWeight: '500', fontFamily: 'Plus Jakarta Sans', fontStyle: 'normal',paddingTop: '10px' }}>
+                               Sharpen your skills with real-world coding challenges.
+                              </div>
+                            </div>
+                            <div className="resumecard-button">
+                              <Link
+  to="/applicantcoding"
+  className="button-link1"
+  style={linkStyle}
+  onMouseEnter={() => setIsHovered(true)}
+  onMouseLeave={() => setIsHovered(false)}
+>
+  <span className="button button-custom" style={spanStyle}>Start Coding</span>
+</Link>
+
+                            </div>
+                          </div>
+ 
+                          <div className="resumecard-icon" style={{ marginLeft: 'auto' }}>
+                            <img
+                              src={Taketest}
+                              alt="Taketest"
+                              style={{ width: '160px', height: 'auto', objectFit: 'contain', marginTop: '10px' }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {!showIcon && (
+                  <div className="col-12 col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12 display-flex certificatebox">
+                    <div className="card" style={{ cursor: 'pointer', backgroundColor: '#FFF9E3', fontFamily: 'Plus Jakarta Sans', fontWeight: '500' }}>
+                      <div className={!isWideScreen ? 'resumecard' : ''}>
+                        <div className="resumecard-content">
+                          <div className="resumecard-text">
+                            <div className="resumecard-heading">
                               <h2 className="heading1">Earn Pre-Screened Badges
                                 <span
                                   style={{
@@ -615,6 +665,7 @@ const ApplicantDashboard = () => {
                     </div>
                   </div>
                 </div>
+                
               </div>
             </div>
           </div>

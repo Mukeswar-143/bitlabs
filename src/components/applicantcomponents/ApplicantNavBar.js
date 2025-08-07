@@ -469,6 +469,60 @@ function ApplicantNavBar() {
   New
 </span>
 </Link>
+<Link 
+  onClick={hideMenu} 
+  to="/applicantcoding" 
+  className={location.pathname === "/applicantcoding" ? "tf-effect active" : ""}
+  style={{ 
+    display: 'inline-flex', 
+    alignItems: 'center', 
+    textDecoration: 'none', 
+    marginTop: '13px' 
+  }}
+>
+  <span 
+    className="dash-icon" 
+    style={{
+      display: 'inline-block', 
+      transition: 'fill 0.3s ease',
+      marginRight: '12px',
+    }}
+  >
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      width="24" 
+      height="25" 
+      viewBox="0 0 24 25" 
+      fill="none"
+      style={{ 
+        fill: location.pathname === "/applicantcoding" ? "#F46F16" : "#888888" 
+      }}
+      onMouseEnter={(e) => e.currentTarget.style.fill = "#F46F16"} 
+      onMouseLeave={(e) => e.currentTarget.style.fill = location.pathname === "/applicantcoding" ? "#F46F16" : "#888888"} 
+    >
+      <path d="M3 17.25V19.25H21V17.25H3ZM3 11.25H15V13.25H3V11.25ZM3 5.25H21V7.25H3V5.25Z" />
+    </svg>
+  </span>
+  <span className="dash-titles" style={{ color: '#333', fontSize: '16px' }}>
+    Code Testing
+  </span>
+  <span 
+    style={{ 
+      color: '#F00',
+      border: '1px solid var(--Color-2, #F00)',
+      borderRadius: '13px',
+      padding: '3px 8px',
+      marginLeft: '25px',
+      fontSize: '10px',
+      fontStyle: 'normal',
+      fontWeight: '500',
+      lineHeight: 'normal',
+    }}
+  >
+    New
+  </span>
+</Link>
+
           </li>
         
 
