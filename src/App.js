@@ -21,6 +21,8 @@ import TermsOfServices from './components/common/TermsOfServices';
 import ApplicantBasicDetails from './components/applicantcomponents/ApplicantBasicDetails';
 import JobWidget from './components/jobWidget';
 import ChatBotWidget from './ChatBotWidget';
+import ApplicantCoding from './components/applicantcomponents/ApplicantCoding';
+import ApplicantCompiler from './components/applicantcomponents/ApplicantCompiler';
 
 
 
@@ -73,6 +75,8 @@ function App() {
               {isLoggedIn ? (
                 <>
                 <Route path="/applicanthome" element={<ApplicantHomePage />} />
+                <Route path="/applicantcompiler/:id" element={<ApplicantCompiler />} />
+                <Route path="/applicantcoding" element={<ApplicantHomePage />} />
                 <Route path="/applicant-update-profile" element={<ApplicantHomePage />} />
                 <Route path="/applicant-view-profile" element={<ApplicantHomePage />} />
                 <Route path="/applicant-find-jobs" element={<ApplicantHomePage />} />

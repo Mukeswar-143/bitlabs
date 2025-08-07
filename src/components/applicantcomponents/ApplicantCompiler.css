@@ -1,0 +1,369 @@
+/* Global Wrapper */
+.compiler-wrapper {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #eff2f6;
+}
+
+/* Left Pane */
+.compiler-left {
+  width: 30%;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: white;
+  overflow-y: auto;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  margin: 0.5%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: solid 1px #ddd;
+}
+
+.compiler-left .compiler-top-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.compiler-top-buttons button {
+  background-color: #fff;
+  color: #F97316;
+  border: solid 1px #F97316;
+  font-weight: 600;
+  height: 40px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.compiler-top-buttons button:hover {
+  background-color: #F97316;
+  color: white;
+}
+
+.compiler-top-buttons .back-next {
+  display: flex;
+  gap: 30px;
+}
+
+.compiler-left .question-name {
+  padding-top: 20px;
+  font-weight: 700;
+  font-size: 35px;
+  color: #222;
+  border-bottom: 1px solid #eba97a;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.compiler-left .problem-statement {
+  padding-top: 10px;
+  font-size: 20px;
+  color: #444;
+  line-height: 1.6;
+  border-bottom: 1px solid #eba97a;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.compiler-left .complexity,
+.compiler-left .constraints {
+  font-size: 20px;
+  color: #555;
+  margin-top: 10px;
+  border-bottom: 1px solid #eba97a;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.compiler-left .test-inputs {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #e4dfdf;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+/* Language Selector */
+.language-selector {
+  width: 100%;
+  height: 7%;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.language-selector .language-label {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.language-selector select {
+  width: auto;
+  min-width: 100px;
+  height: 40px;
+  padding: 4px 6px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+/* Right Pane */
+.compiler-right {
+  width: 65%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 10px;
+  margin: 0.5%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: solid 1px #ddd;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+/* Code Editor + Line Numbers */
+.editor-wrapper {
+  display: flex;
+  width: 100%;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: monospace;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.line-numbers {
+  padding: 10px;
+  background-color: #eee;
+  color: #666;
+  text-align: right;
+  user-select: none;
+  border-right: 1px solid #ccc;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.line-number {
+  height: 20px;
+  line-height: 20px;
+}
+
+.code-editor {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  outline: none;
+  resize: none;
+  line-height: 20px;
+  background-color: #fdfdfd;
+  height: 500px;
+  overflow-y: auto;
+  font-family: monospace;
+}
+
+.code-editor:focus {
+  border: 1px solid #946713;
+}
+
+/* Buttons */
+.compiler-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.run-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-btn {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Output Section */
+.compiler-right .output-section {
+  margin-top: 20px;
+  height: 250px;
+  overflow-y: auto;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+.output-section p {
+  font-weight: bold;
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+.output-box {
+  background-color: #f4f4f4;
+  padding: 10px;
+  border: 1px solid #ddd;
+  white-space: pre-wrap;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  height: 130px;
+  overflow-y: auto;
+}
+
+.output-box strong {
+  font-size: 15px;
+}
+.output-section p{
+  margin: 0;
+  font-size: 20px;
+  color: #333;
+}
+.output-section h2{
+  margin: 0;
+  font-size: 25px;
+  color: #333;
+  padding-bottom: 10px;
+}
+
+@media (max-width: 1440px), (max-height: 900px) {
+  .compiler-left {
+    width: 35%;
+  }
+
+  .compiler-right {
+    width: 62%;
+  }
+
+  .code-editor {
+    height: 420px;
+  }
+
+  .compiler-left .question-name {
+    font-size: 28px;
+  }
+}
+
+/* Medium Devices: Tablets and small laptops (1024x768) */
+@media (max-width: 1024px), (max-height: 768px) {
+  .compiler-wrapper {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .compiler-left,
+  .compiler-right {
+    width: 95%;
+    margin: 10px auto;
+    padding: 15px;
+  }
+
+  .code-editor {
+    height: 350px;
+  }
+
+  .compiler-left .question-name {
+    font-size: 24px;
+  }
+
+  .compiler-left .problem-statement,
+  .compiler-left .complexity,
+  .compiler-left .constraints,
+  .compiler-left .test-inputs {
+    font-size: 17px;
+  }
+
+  .output-section p {
+    font-size: 16px;
+  }
+}
+
+/* Small Devices: Phones and small tablets (768px & 600px height) */
+@media (max-width: 768px), (max-height: 600px) {
+  .compiler-wrapper {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .compiler-left,
+  .compiler-right {
+    width: 100%;
+    margin: 5px auto;
+    padding: 10px;
+  }
+
+  .language-selector {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .compiler-top-buttons .back-next {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .code-editor {
+    height: 280px;
+    font-size: 12px;
+  }
+
+  .output-box {
+    height: auto;
+    font-size: 13px;
+  }
+
+  .compiler-left .question-name {
+    font-size: 20px;
+  }
+
+  .compiler-left .problem-statement,
+  .compiler-left .complexity,
+  .compiler-left .constraints,
+  .compiler-left .test-inputs {
+    font-size: 15px;
+  }
+
+  .output-section p {
+    font-size: 14px;
+  }
+}
+
+/* Extra Small Devices (e.g., landscape phones) */
+@media (max-width: 480px), (max-height: 480px) {
+  .code-editor {
+    height: 220px;
+    font-size: 11px;
+  }
+
+  .compiler-left .question-name {
+    font-size: 18px;
+  }
+
+  .output-box {
+    font-size: 12px;
+  }
+
+  .compiler-left .problem-statement,
+  .compiler-left .complexity,
+  .compiler-left .constraints,
+  .compiler-left .test-inputs {
+    font-size: 14px;
+  }
+
+  .output-section p {
+    font-size: 13px;
+  }
+}
