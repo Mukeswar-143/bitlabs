@@ -333,19 +333,9 @@ useEffect(() => {
                         </span>
                       </div>
                       <div className="content">
-                        <span
-                           className="title-count"
-                           role="button"
-                           tabIndex={0}
-                           aria-label="Open recommended jobs"
-                           onClick={handleRedirect}
-                           onKeyDown={(e) => {
-                           if (e.key === 'Enter' || e.key === ' ') {
-                              e.preventDefault();
-                              handleRedirect();
-                             }
-                          }}
-                          style={{ cursor: 'pointer' }}
+                         <span
+                          className="title-count"
+                          style={{ cursor: "pointer" }}
                         >
                           Recommended Jobs
                         </span>
@@ -359,7 +349,7 @@ useEffect(() => {
                   <button className="card" onClick={handleRedirect1} style={{ cursor: "pointer" }}>
                     <div className="container">
                       <div>
-                        <div className="box-icon wrap-counter flex" onClick={handleRedirect1}>
+                        <div className="box-icon wrap-counter flex">
                           <span className="icon-bag color-icon-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
                               <g clipPath="url(#clip0_778_1032)">
@@ -377,7 +367,6 @@ useEffect(() => {
                       <div className="content">
                         <span
                           className="title-count"
-                          onClick={handleRedirect1}
                           style={{ cursor: "pointer" }}
                         >
                           Applied Jobs
@@ -391,7 +380,7 @@ useEffect(() => {
                   <button className="card" onClick={handleRedirect2} style={{ cursor: "pointer" }}>
                     <div className="container">
                       <div>
-                        <div className="box-icon wrap-counter flex" onClick={handleRedirect2} >
+                        <div className="box-icon wrap-counter flex">
                           <span className="icon-bag color-icon-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="36" height="37" viewBox="0 0 36 37" fill="none">
                               <path d="M15.5263 29.3289L9.6028 31.8658C8.74705 32.2323 7.93568 32.1637 7.16868 31.6599C6.40193 31.1564 6.01855 30.4458 6.01855 29.528V11.4395C6.01855 10.7308 6.26755 10.1275 6.76555 9.62979C7.2633 9.13179 7.86668 8.88279 8.57568 8.88279H22.4769C23.1857 8.88279 23.7891 9.13179 24.2871 9.62979C24.7851 10.1275 25.0341 10.7308 25.0341 11.4395V29.528C25.0341 30.4458 24.6506 31.1564 23.8836 31.6599C23.1168 32.1637 22.3056 32.2323 21.4498 31.8658L15.5263 29.3289ZM28.9318 29.114C28.6448 29.114 28.3982 29.0125 28.1919 28.8095C27.9857 28.6068 27.8826 28.3597 27.8826 28.0682V6.49592C27.8826 6.38042 27.8344 6.27454 27.7382 6.17829C27.6419 6.08229 27.5362 6.03429 27.4209 6.03429H11.4201C11.1288 6.03429 10.8804 5.93279 10.6749 5.72979C10.4697 5.52704 10.3671 5.27992 10.3671 4.98842C10.3671 4.69717 10.4697 4.44892 10.6749 4.24367C10.8804 4.03842 11.1288 3.93579 11.4201 3.93579H27.4217C28.1322 3.93579 28.7363 4.18467 29.2341 4.68242C29.7321 5.18042 29.9811 5.78442 29.9811 6.49442V28.0682C29.9811 28.3597 29.8778 28.6068 29.6713 28.8095C29.4651 29.0125 29.2186 29.114 28.9318 29.114Z" fill="#FFB321" />
@@ -402,7 +391,6 @@ useEffect(() => {
                       <div className="content">
                         <span
                           className="title-count"
-                          onClick={handleRedirect2}
                           style={{ cursor: "pointer" }}
                         >
                           Saved Jobs
@@ -540,8 +528,9 @@ useEffect(() => {
                         <div className="resumecard-content">
                           <div className="resumecard-text">
                             <div className="resumecard-heading">
-                              <h2 className="heading1">Earn Pre-Screened Badges
-                                <span
+                              <h2 className="heading1" style={{display:"flex"}}>Earn Pre-Screened Badges
+                                <div>
+                                  <span
                                   style={{
                                     color: '#F00', // Red text color
                                     border: '1px solid var(--Color-2, #F00)', // Red border
@@ -557,6 +546,7 @@ useEffect(() => {
                                 >
                                   New
                                 </span>
+                                </div>
                               </h2>
                               <div className="" style={{ fontSize: '16.8px', color: '#6F6F6F', fontWeight: '500', fontFamily: 'Plus Jakarta Sans', fontStyle: 'normal' }}>
                                 Achieve your dream job faster by demonstrating your aptitude and technical skills.
