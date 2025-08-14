@@ -1,38 +1,25 @@
-import React from "react";
-import { useState, useEffect } from 'react';
+import React,{ useState, useEffect, useRef } from 'react';
 import axios from "axios";
 import { useUserContext } from '../common/UserProvider';
-import ApplicantAPIService, { apiUrl } from '../../services/ApplicantAPIService';
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import Resume from '../../images/user/avatar/Resume.png';
+import { apiUrl } from '../../services/ApplicantAPIService';
+import { Link , useNavigate } from "react-router-dom";
 import Certificate from '../../images/user/avatar/Certificate.png';
 import Taketest from '../../images/user/avatar/Taketest.png';
-import { useLocation } from "react-router-dom";
-import { faL } from "@fortawesome/free-solid-svg-icons";
-import ModalWrapper from './ModalWrapper';
-import Button from '@mui/material/Button';
-import ResumeBuilder from './ResumeBuilder';
 import SmartPhone from "../../images/dashboard/mobilebanners/smartphone.png"
 import appStoreIcon from "../../images/dashboard/mobilebanners/appstoreicon.png";
 import playStore from "../../images/dashboard/mobilebanners/playstore.png";
  
  
 const ApplicantDashboard = () => {
-  const [token, setToken] = useState('');
   const { user } = useUserContext();
   const [loading, setLoading] = useState(true);
-  const [contRecJobs, setCountRecJobs] = useState(0);
-  const [contAppliedJob, setAppliedJobs] = useState(0);
-  const [contSavedJobs, setSavedJobs] = useState(0);
+  const [countRecJobs, setCountRecJobs] = useState(0);
+  const [countAppliedJobs, setCountAppliedJobs] = useState(0);
+  const [countSavedJobs, setCountSavedJobs] = useState(0);
   const navigate = useNavigate();
-  const [profileid1, setprofileid] = useState();
   const userId = user.id;
   const [isHovered, setIsHovered] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
   const [isWideScreen, setIsWideScreen] = useState(false);
   const [hiredCount, setHiredCount] = useState(null);
  
@@ -125,10 +112,10 @@ const ApplicantDashboard = () => {
         });
  
         const newData = {
-          identifier: response.data.applicant.email,
-          password: response.data.applicant.password,
-          localResume: response.data.applicant.localResume,
-          firstName: response.data.basicDetails != null && response.data.basicDetails.firstName != null ? response.data.basicDetails.firstName : ""
+          identifier: response?.data?.applicant?.email,
+          password: response?.data?.applicant?.password,
+          localResume: response?.data?.applicant?.localResume,
+          firstName: response?.data?.basicDetails?.firstName ?? ""
         };
  
         // Store newData in local storage
@@ -144,13 +131,6 @@ const ApplicantDashboard = () => {
   }, []);
  
  
- 
-  useEffect(() => {
-    const storedToken = localStorage.getItem('jwtToken');
-    if (storedToken) {
-      setToken(storedToken);
-    }
-  }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -185,7 +165,7 @@ const ApplicantDashboard = () => {
     axios
       .get(`${apiUrl}/applyjob/countAppliedJobs/${user.id}`)
       .then((response) => {
-        setAppliedJobs(response.data);
+        setCountAppliedJobs(response.data);
       })
       .catch((error) => {
         console.error('Error fetching team members:', error);
@@ -199,43 +179,48 @@ const ApplicantDashboard = () => {
     axios
       .get(`${apiUrl}/savedjob/countSavedJobs/${user.id}`)
       .then((response) => {
-        setSavedJobs(response.data);
+        setCountSavedJobs(response.data);
       })
       .catch((error) => {
         console.error('Error fetching team members:', error);
       });
   }, [user.id]);
- 
-  const [testData, setTestData] = useState([]);
-  const [showIcon, setShowIcon] = useState(false);
- 
-  {/* tests api */ }
-  useEffect(() => {
-    const fetchTestData = async () => {
-      try {
-        const jwtToken = localStorage.getItem('jwtToken');
-        const response = await axios.get(`${apiUrl}/applicant1/tests/${user.id}`, {
+
+  const testDataRef = useRef([]);
+const [showIcon, setShowIcon] = useState(false);
+
+// tests api
+useEffect(() => {
+  const fetchTestData = async () => {
+    try {
+      const jwtToken = localStorage.getItem('jwtToken');
+      const response = await axios.get(
+        `${apiUrl}/applicant1/tests/${user.id}`,
+        {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
           },
-        });
- 
-        const data = response.data;
-        setTestData(data);
- 
-        // Check if both aptitude and technical tests have status "P" or "p"
-        const allTestsPassed = data.length >= 2 && data.every(test => test.testStatus.toLowerCase() === 'p');
- 
-        setShowIcon(allTestsPassed);
- 
-      } catch (error) {
-        console.error('Error fetching test data:', error);
-      }
-    };
- 
-    fetchTestData();
-  }, [user.id]);
- 
+        }
+      );
+
+      const data = response.data;
+      testDataRef.current = data; // store without re-render
+
+      // Check if both aptitude and technical tests have status "P" or "p"
+      const allTestsPassed =
+        data.length >= 2 &&
+        data.every((test) => test.testStatus?.toLowerCase() === "p");
+
+      setShowIcon(allTestsPassed);
+
+    } catch (error) {
+      console.error("Error fetching test data:", error);
+    }
+  };
+
+  fetchTestData();
+}, [user.id]);
+
   const handleRedirect = () => {
  
     navigate("/applicant-find-jobs");
@@ -251,11 +236,7 @@ const ApplicantDashboard = () => {
     navigate("/applicant-saved-jobs");
   };
  
-  const Buildresume = () => {
-    navigate("/applicant-resume-builder");
-  };
  
-  const location = useLocation();
   const linkStyle = {
     backgroundColor: isHovered ? '#ea670c' : '#F97316',
     display: 'inline-block',
@@ -268,7 +249,6 @@ const ApplicantDashboard = () => {
     fontWeight: '600',
  
   };
-  // const [showIcon, setShowIcon] = useState(false); // Set to true or false to show/hide the SVG
   useEffect(() => {
     const handleResize = () => {
       setIsWideScreen(window.innerWidth > 780);
@@ -335,12 +315,12 @@ const ApplicantDashboard = () => {
             <div className="col-lg-12 col-md-12">
               <div className="row dash-count">
                 <div className="col-12 col-xxl-3 col-xl-4 col-lg-4 col-md-12 col-sm-12 display-flex">
-                  <div className="card" onClick={handleRedirect} style={{ cursor: "pointer" }}>
+                  <button type="button"  className="card" onClick={handleRedirect} style={{ cursor: "pointer",borderRadius:"1rem !important"}}>
                     <div className="container">
                       <div>
                         <span className="icon-bag color-icon-1">
                           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
-                            <g clip-path="url(#clip0_778_1027)">
+                            <g clipPath="url(#clip0_778_1027)">
                               <path d="M25.3333 5.83333H23.8667C23.5572 4.32855 22.7384 2.97646 21.5483 2.00496C20.3582 1.03345 18.8696 0.501939 17.3333 0.5L14.6667 0.5C13.1304 0.501939 11.6418 1.03345 10.4517 2.00496C9.26157 2.97646 8.4428 4.32855 8.13333 5.83333H6.66667C4.89921 5.83545 3.20474 6.53851 1.95496 7.78829C0.705176 9.03808 0.00211714 10.7325 0 12.5L0 16.5H32V12.5C31.9979 10.7325 31.2948 9.03808 30.045 7.78829C28.7953 6.53851 27.1008 5.83545 25.3333 5.83333ZM10.912 5.83333C11.1868 5.05612 11.695 4.38279 12.3671 3.90545C13.0392 3.42811 13.8423 3.17008 14.6667 3.16667H17.3333C18.1577 3.17008 18.9608 3.42811 19.6329 3.90545C20.305 4.38279 20.8132 5.05612 21.088 5.83333H10.912Z" fill="#2776ED" />
                               <path d="M17.3333 20.5C17.3333 20.8536 17.1929 21.1927 16.9428 21.4428C16.6928 21.6928 16.3536 21.8333 16 21.8333C15.6464 21.8333 15.3072 21.6928 15.0572 21.4428C14.8071 21.1927 14.6667 20.8536 14.6667 20.5V19.1666H0V25.8333C0.00211714 27.6008 0.705176 29.2952 1.95496 30.545C3.20474 31.7948 4.89921 32.4978 6.66667 32.5H25.3333C27.1008 32.4978 28.7953 31.7948 30.045 30.545C31.2948 29.2952 31.9979 27.6008 32 25.8333V19.1666H17.3333V20.5Z" fill="#2776ED" />
                             </g>
@@ -354,27 +334,35 @@ const ApplicantDashboard = () => {
                       </div>
                       <div className="content">
                         <span
-                          className="title-count"
-                          onClick={handleRedirect}
-                          style={{ cursor: "pointer" }}
+                           className="title-count"
+                           role="button"
+                           tabIndex={0}
+                           aria-label="Open recommended jobs"
+                           onClick={handleRedirect}
+                           onKeyDown={(e) => {
+                           if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault();
+                              handleRedirect();
+                             }
+                          }}
+                          style={{ cursor: 'pointer' }}
                         >
                           Recommended Jobs
                         </span>
-                        <h3>{contRecJobs}</h3>
+                        <h3>{countRecJobs}</h3>
  
                       </div>
-                    </div>
- 
-                  </div>
+                    </div> 
+                  </button>
                 </div>
                 <div className="col-12 col-xxl-3 col-xl-4 col-lg-4 col-md-12 col-sm-12 display-flex">
-                  <div className="card" onClick={handleRedirect1} style={{ cursor: "pointer" }}>
+                  <button className="card" onClick={handleRedirect1} style={{ cursor: "pointer" }}>
                     <div className="container">
                       <div>
                         <div className="box-icon wrap-counter flex" onClick={handleRedirect1}>
                           <span className="icon-bag color-icon-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
-                              <g clip-path="url(#clip0_778_1032)">
+                              <g clipPath="url(#clip0_778_1032)">
                                 <path d="M32 23.8333V24.5H16V23.8333C16 21.4893 17.744 19.5613 20 19.2347C20 17.764 21.196 16.5 22.6667 16.5H25.3333C26.804 16.5 28 17.764 28 19.2347C30.256 19.5613 32 21.4893 32 23.8333ZM13.3333 23.8333C13.3333 22.228 13.8813 20.732 14.7907 19.508C13.8933 19.2933 12.9613 19.1667 12 19.1667C5.39067 19.1667 0.0120022 24.5373 2.24782e-06 31.144C-0.00133109 31.8867 0.590669 32.5 1.33334 32.5H15.0147C13.9653 31.2307 13.3333 29.604 13.3333 27.8333V23.8333ZM12 16.5C16.412 16.5 20 12.912 20 8.5C20 4.088 16.412 0.5 12 0.5C7.588 0.5 4 4.088 4 8.5C4 12.912 7.588 16.5 12 16.5ZM24 28.5C23.264 28.5 22.6667 27.9027 22.6667 27.1667H16V27.8333C16 30.4067 18.0933 32.5 20.6667 32.5H27.3333C29.9067 32.5 32 30.4067 32 27.8333V27.1667H25.3333C25.3333 27.9027 24.736 28.5 24 28.5Z" fill="#FF6633" />
                               </g>
                               <defs>
@@ -394,13 +382,13 @@ const ApplicantDashboard = () => {
                         >
                           Applied Jobs
                         </span>
-                        <h3>{contAppliedJob}</h3>
+                        <h3>{countAppliedJobs}</h3>
                       </div>
                     </div>
-                  </div>
+                  </button>
                 </div>
                 <div className="col-12 col-xxl-3 col-xl-4 col-lg-4 col-md-12 col-sm-12 display-flex">
-                  <div className="card" onClick={handleRedirect2} style={{ cursor: "pointer" }}>
+                  <button className="card" onClick={handleRedirect2} style={{ cursor: "pointer" }}>
                     <div className="container">
                       <div>
                         <div className="box-icon wrap-counter flex" onClick={handleRedirect2} >
@@ -419,10 +407,10 @@ const ApplicantDashboard = () => {
                         >
                           Saved Jobs
                         </span>
-                        <h3>{contSavedJobs}</h3>
+                        <h3>{countSavedJobs}</h3>
                       </div>
                     </div>
-                  </div>
+                  </button>
                 </div>
 
                 
