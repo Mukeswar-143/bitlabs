@@ -3,19 +3,21 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import axios from  'axios';
 import { apiUrl } from "../../services/ApplicantAPIService";
 import { useUserContext } from "../common/UserProvider";
-import Spinner from "../common/Spinner";
 import Snackbar from "../common/Snackbar";
 import "./ApplicantFindJobs.css";
+import PropTypes from "prop-types";
+
+ApplicantFindJobs.propTypes = {
+  setSelectedJobId: PropTypes.func.isRequired, // <-- validate prop
+};
  
 function ApplicantFindJobs({ setSelectedJobId }) {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [profileid1, setProfileId] = useState(null);
+  const [profileid1, setProfileid1] = useState(null);
   const [page, setPage] = useState(0); // Start at page 0
   const [size] = useState(16); // Number of jobs per request
-  const [hasMore, setHasMore] = useState(true);
   const [totalPages, setTotalPages] = useState(1);
-  const [totalJobCount, setTotalJobCount] = useState(0);
   const [snackbars, setSnackbars] = useState([]);// added snackbar
 const navigate = useNavigate();
 const location = useLocation();
@@ -44,16 +46,7 @@ const fetchJobs = async (pageNum = 0, profileId = profileid1) => {
     });
 
     const newJobs = response.data;
-    
-    setHasMore(newJobs.length === size); // If less than `size`, no more pages
-
-    // Clear the jobs when navigating to a new page (reset for page 0)
-    if (pageNum === 0) {
-      setJobs(newJobs); // Set only the jobs of the current page
-    } else {
-      setJobs(newJobs); // Reset jobs when switching pages
-    }
-
+    setJobs(newJobs); 
     setPage(pageNum); // Update the current page
   } catch (error) {
     console.error("Error fetching jobs:", error);
@@ -71,7 +64,7 @@ const fetchProfileId = async () => {
     const profileRes = await axios.get(`${apiUrl}/applicantprofile/${userId}/profileid`, {
       headers: { Authorization: `Bearer ${jwtToken}` },
     });
-    setProfileId(profileRes.data); // Set profile ID
+    setProfileid1(profileRes.data); // Set profile ID
     fetchJobCount(); // Fetch the total job count after setting profile ID
     fetchJobs(0, profileRes.data); // Fetch the first page of jobs
   } catch (error) {
@@ -86,7 +79,6 @@ const fetchJobCount = async () => {
       headers: { Authorization: `Bearer ${jwtToken}` },
     });
     const count = response.data;
-    setTotalJobCount(count);
     setTotalPages(Math.ceil(count / size)); // Calculate total pages
   } catch (error) {
     console.error("Error fetching job count:", error);
@@ -175,19 +167,23 @@ const handlePageClick = (pageNum) => {
                         <div style={{ marginLeft: 30 }}>No jobs available</div>
                       ) : (
                         jobs.map((job) => (
-                          <div className="features-job cl2 bg-white" key={job.id} onClick={(e) => {
-    
-                            setSelectedJobId(job.id);
-                        }}
-                         >
+                        <Link
+                            href="#"
+                            key={job.id}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setSelectedJobId(job.id);
+                            }}
+                           > 
+                          <div  className="features-job cl2 bg-white"  >
                             <div className="job-archive-header">
                               <div className="inner-box">
                                 <div className="box-content">
                                   <h4>
-                                    <a href="javascript:void(0);">{job.companyname || job?.jobRecruiter?.companyname}</a>
+                                    <span>{job.companyname || job?.jobRecruiter?.companyname}</span>
                                   </h4>
                                   <h3>
-                                    <a href="javascript:void(0);">{job.jobTitle}</a>
+                                    <span>{job.jobTitle}</span>
                                   </h3>
                                   <ul>
                                     <li>
@@ -202,16 +198,16 @@ const handlePageClick = (pageNum) => {
                               <div className="job-footer-left">
                                 <ul className="job-tag">
                                   <li>
-                                    <a href="javascript:void(0);">{job.employeeType}</a>
+                                    <span>{job.employeeType}</span>
                                   </li>
                                   <li>
-                                    <a href="javascript:void(0);">{job.remote ? "Remote" : "Office-based"}</a>
+                                    <span>{job.remote ? "Remote" : "Office-based"}</span>
                                   </li>
                                   <li>
-                                    <a href="javascript:void(0);">Exp {job.minimumExperience} - {job.maximumExperience} years</a>
+                                    <span>Exp {job.minimumExperience} - {job.maximumExperience} years</span>
                                   </li>
                                   <li>
-                                    <a href="javascript:void(0);">₹ {job.minSalary} - ₹ {job.maxSalary} LPA</a>
+                                    <span>₹ {job.minSalary} - ₹ {job.maxSalary} LPA</span>
                                   </li>
                                 </ul>
                               </div>
@@ -240,6 +236,7 @@ const handlePageClick = (pageNum) => {
                               </div>
                             </div>
                           </div>
+                        </Link>
                         ))
                       )}
                     </div>
@@ -279,9 +276,9 @@ const handlePageClick = (pageNum) => {
       acc.push(pageNumber);
       return acc;
     }, [])
-    .map((pageNumber, index) =>
+    .map((pageNumber) =>
       pageNumber === "..." ? (
-        <span key={index} style={{ padding: "0 5px" }}>...</span>
+        <span key={pageNumber} style={{ padding: "0 5px" }}>...</span>
       ) : (
         <button
           key={pageNumber}
@@ -311,17 +308,17 @@ const handlePageClick = (pageNum) => {
       </div>
     )
 }
-      {snackbars.map((snackbar, index) => (
-        <Snackbar
-          key={index}
-          index={index}
-          message={snackbar.message}
-          type={snackbar.type}
-          onClose={handleCloseSnackbar}
-          link={snackbar.link}
-          linkText={snackbar.linkText}
-        />
-      ))}
+      {snackbars.map((snackbar) => (
+  <Snackbar
+    key={snackbar.id}   // ✅ stable unique key
+    message={snackbar.message}
+    type={snackbar.type}
+    onClose={handleCloseSnackbar}
+    link={snackbar.link}
+    linkText={snackbar.linkText}
+  />
+))}
+
     </div>
   );
 }

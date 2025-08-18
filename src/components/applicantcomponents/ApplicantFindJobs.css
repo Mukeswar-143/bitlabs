@@ -26,7 +26,29 @@
     background: white;
     color:#EA670C;
 }
- 
+
+.job-tag li span{
+  background-color: #F6F6f6;
+  color: #121212;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 52px;
+
+}
+h4 span{
+    transition: all 0.3s ease-in-out;
+  color: #F97316;
+  font-weight: 600;
+}
+h3 span{
+      transition: all 0.3s ease-in-out;
+  font-weight: 700;
+  color: #121212;
+  text-transform: capitalize;
+}
+
 @media (min-width: 1000px) and (max-width: 1440px) {
     .col-lg-9 {
 width: 100% !important;

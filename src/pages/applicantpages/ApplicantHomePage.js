@@ -14,7 +14,6 @@ import ApplicantAppliedJobs from '../../components/applicantcomponents/Applicant
 import ApplicantSavedJobs from '../../components/applicantcomponents/ApplicantSavedJobs';
 import ApplicantInterviewStatus from '../../components/applicantcomponents/ApplicantInterviewStatus';
 import ApplicantChangePassword from '../../components/applicantcomponents/ApplicantChangePassword';
-import ApplicantDeleteProfile from '../../components/applicantcomponents/ApplicantDeleteProfile';
 import ApplicantJobAlerts from '../../components/applicantcomponents/ApplicantJobAlerts';
 import ApplicantResume from '../../components/applicantcomponents/ApplicantResume';
 import ApplicantEditProfile from '../../components/applicantcomponents/ApplicantEditProfile';
@@ -136,7 +135,6 @@ function ApplicantHomePage() {
      {activeRoute === 'savedjobs' && <ApplicantSavedJobs setSelectedJobId={setSelectedJobId} />}
      {activeRoute === 'interviewstatus' && (<ApplicantInterviewStatus selectedJobId={selectedJobId} setSelectedJobId={setSelectedJobId} /> )}
      {activeRoute === 'changepassword' && <ApplicantChangePassword />}
-     {activeRoute === 'deleteprofile' && <ApplicantDeleteProfile />}
      {activeRoute === 'jobalerts' && <ApplicantJobAlerts />}
      {activeRoute === 'resume' && <ApplicantResume />}
      {activeRoute === 'resumebuilder' && <ResumeBuilder />}
