@@ -2,7 +2,7 @@
 
 .container-list {
   width: 70%;
-  margin-left: 20%;
+  margin-left: 25%;
   border-radius: 12px;
   padding-top: 8%;
 }
@@ -15,7 +15,7 @@
 
 /* Card styles */
 .card-question {
-  width: 100%;
+  width: 90%;
   border: none;
   border-radius: 14px;
   background: #ffffff;

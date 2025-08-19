@@ -4,7 +4,6 @@ import "./ApplicantCompiler.css";
 import axios from "axios";
 import { apiUrl } from "../../services/ApplicantAPIService";
 import { useUserContext } from '../common/UserProvider';
-import { set } from "react-ga";
 
 const ApplicantCompiler = () => {
   const navigate = useNavigate();
