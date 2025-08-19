@@ -176,7 +176,8 @@ const ApplicantCompiler = () => {
 
       {/* Right Panel */}
       <div className="compiler-right">
-        <div className="language-selector">
+        <div className="compiler-right-top">
+               <div className="language-selector">
           <label htmlFor="language-select" className="language-label">Select Language:</label>
           <select id="language-select" value={language} onChange={handleLanguageChange}>
             <option value="java">Java</option>
@@ -186,11 +187,6 @@ const ApplicantCompiler = () => {
 
         <div className="code-editor-section">
           <div className="editor-wrapper">
-            <div className="line-numbers">
-              {code.split("\n").map((_, i) => (
-                <div key={i} className="line-number">{i + 1}</div>
-              ))}
-            </div>
             <textarea
               value={code}
               onChange={(e) => setCode(e.target.value)}
@@ -210,8 +206,7 @@ const ApplicantCompiler = () => {
             <button className="submit-btn" onClick={handleSubmit}>Submit</button>
           </div>
         </div>
-
-
+        </div>
         <div className="output-section">
           {score !== null && (
             <div className="score-box">
