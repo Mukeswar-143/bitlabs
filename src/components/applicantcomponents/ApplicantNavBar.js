@@ -469,8 +469,6 @@ function ApplicantNavBar() {
   New
 </span>
 </Link>
-<<<<<<< HEAD
-=======
 <Link 
   onClick={hideMenu} 
   to="/applicantcoding" 
@@ -525,7 +523,6 @@ function ApplicantNavBar() {
   </span>
 </Link>
 
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
           </li>
         
 

@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-import { useState, useEffect } from 'react';
-import axios from "axios";
-import { useUserContext } from '../common/UserProvider';
-import ApplicantAPIService, { apiUrl } from '../../services/ApplicantAPIService';
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import Resume from '../../images/user/avatar/Resume.png';
-import Certificate from '../../images/user/avatar/Certificate.png';
-import Taketest from '../../images/user/avatar/Taketest.png';
-import { useLocation } from "react-router-dom";
-import { faL } from "@fortawesome/free-solid-svg-icons";
-import ModalWrapper from './ModalWrapper';
-import Button from '@mui/material/Button';
-import ResumeBuilder from './ResumeBuilder';
-=======
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import { useUserContext } from '../common/UserProvider';
@@ -22,29 +5,12 @@ import { apiUrl } from '../../services/ApplicantAPIService';
 import { useNavigate , Link , useLocation } from "react-router-dom";
 import Certificate from '../../images/user/avatar/Certificate.png';
 import Taketest from '../../images/user/avatar/Taketest.png';
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 import SmartPhone from "../../images/dashboard/mobilebanners/smartphone.png"
 import appStoreIcon from "../../images/dashboard/mobilebanners/appstoreicon.png";
 import playStore from "../../images/dashboard/mobilebanners/playstore.png";
  
  
 const ApplicantDashboard = () => {
-<<<<<<< HEAD
-  const [token, setToken] = useState('');
-  const { user } = useUserContext();
-  const [loading, setLoading] = useState(true);
-  const [contRecJobs, setCountRecJobs] = useState(0);
-  const [contAppliedJob, setAppliedJobs] = useState(0);
-  const [contSavedJobs, setSavedJobs] = useState(0);
-  const navigate = useNavigate();
-  const [profileid1, setprofileid] = useState();
-  const userId = user.id;
-  const [isHovered, setIsHovered] = useState(false);
-  const [userData, setUserData] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-=======
   const { user } = useUserContext();
   const [loading, setLoading] = useState(true);
   const [contRecJobs, setCountRecJobs] = useState("0");
@@ -54,7 +20,6 @@ const ApplicantDashboard = () => {
   const userId = user.id;
   const [isHovered, setIsHovered] = useState(false);
   const [userData, setUserData] = useState(null);
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   const [isWideScreen, setIsWideScreen] = useState(false);
   const [hiredCount, setHiredCount] = useState(null);
  
@@ -122,14 +87,6 @@ const ApplicantDashboard = () => {
         const profileId = profileIdResponse.data;
  
  
-<<<<<<< HEAD
-        if (profileId === 0) {
-          navigate('/applicant-basic-details-form');
-        } else {
-          setLoading(false);
-        }
-=======
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
       } catch (error) {
         console.error('Error fetching profile ID:', error);
       }
@@ -168,18 +125,7 @@ const ApplicantDashboard = () => {
     fetchUserData();
   }, []);
  
-<<<<<<< HEAD
- 
- 
-  useEffect(() => {
-    const storedToken = localStorage.getItem('jwtToken');
-    if (storedToken) {
-      setToken(storedToken);
-    }
-  }, []);
-=======
 
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -581,8 +527,6 @@ const ApplicantDashboard = () => {
                         <div className="resumecard-content">
                           <div className="resumecard-text">
                             <div className="resumecard-heading">
-<<<<<<< HEAD
-=======
                               <h2 className="heading1">  Join the Coding Challenge
                                 <span
                                   style={{
@@ -638,7 +582,6 @@ const ApplicantDashboard = () => {
                         <div className="resumecard-content">
                           <div className="resumecard-text">
                             <div className="resumecard-heading">
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
                               <h2 className="heading1">Earn Pre-Screened Badges
                                 <span
                                   style={{
@@ -722,10 +665,7 @@ const ApplicantDashboard = () => {
                     </div>
                   </div>
                 </div>
-<<<<<<< HEAD
-=======
                 
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
               </div>
             </div>
           </div>

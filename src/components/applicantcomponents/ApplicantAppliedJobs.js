@@ -1,21 +1,14 @@
-<<<<<<< HEAD
-import React, { useState, useEffect, useCallback } from 'react';
-=======
 import React, { useState, useEffect } from 'react';
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { apiUrl } from '../../services/ApplicantAPIService';
 import { useUserContext } from '../common/UserProvider';
 import './ApplicantFindJobs.css';
-<<<<<<< HEAD
-=======
 import PropTypes from 'prop-types';
 
 ApplicantAppliedJobs.propTypes = {
   setSelectedJobId: PropTypes.func.isRequired,
 };
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
  
 function ApplicantAppliedJobs({ setSelectedJobId }) {
   const [jobs, setJobs] = useState([]);
@@ -72,18 +65,11 @@ function ApplicantAppliedJobs({ setSelectedJobId }) {
                     fetchData();
                   }, [pageNum]);
  
-<<<<<<< HEAD
-  const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
-  };
-=======
 const formatDate = (dateString) => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   return new Date(dateString + 'T00:00:00').toLocaleDateString(undefined, options);
 };
 
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   const handleCheckStatusClick = (jobId, applyJobId) => {
     setSelectedJobId(applyJobId);
     navigate(`/applicant-interview-status?jobId=${jobId}&applyJobId=${applyJobId}`);
@@ -125,11 +111,7 @@ const formatDate = (dateString) => {
                                 <div className="inner-box">
                                   <div className="box-content">
                                     <h4>
-<<<<<<< HEAD
-                                      <a href="javascript:void(0);">{job.companyname}</a>
-=======
                                       <p href="javascript:void(0);" style={{color:'#EA670C',fontWeight: '600'}}>{job.companyname}</p>
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
                                     </h4>
                                     <h3>{job.jobTitle}</h3>
                                     <ul>
@@ -144,22 +126,6 @@ const formatDate = (dateString) => {
                                 <div className="job-footer-left">
                                   <ul className="job-tag">
                                     <li>
-<<<<<<< HEAD
-                                      <a href="javascript:void(0);">{job.employeeType}</a>
-                                    </li>
-                                    <li>
-                                      <a href="javascript:void(0);">
-                                        {job.remote ? 'Remote' : 'Office-based'}
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="javascript:void(0);">
-                                        Exp &nbsp;{job.minimumExperience} - {job.maximumExperience} years
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="javascript:void(0);">&#x20B9; {convertToLakhs(job.minSalary)} - &#x20B9; {convertToLakhs(job.maxSalary)} LPA</a>
-=======
                                       <p href="javascript:void(0);">{job.employeeType}</p>
                                     </li>
                                     <li>
@@ -174,7 +140,6 @@ const formatDate = (dateString) => {
                                     </li>
                                     <li>
                                       <p href="javascript:void(0);">&#x20B9; {convertToLakhs(job.minSalary)} - &#x20B9; {convertToLakhs(job.maxSalary)} LPA</p>
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
                                     </li>
                                   </ul>
                                 </div>

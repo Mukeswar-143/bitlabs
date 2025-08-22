@@ -79,12 +79,9 @@
 
 .header {
   margin-bottom: 20px;
-<<<<<<< HEAD
-=======
   display: flex;
   flex-direction: column;
   align-items: flex-start;
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 }
 
 .form-title {

@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-<<<<<<< HEAD
-import ApplicantAPIService, { apiUrl } from '../../services/ApplicantAPIService';
-=======
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 import { useUserContext } from '../common/UserProvider';
 import { useNavigate,useParams } from 'react-router-dom';
 import 'react-international-phone/style.css';
@@ -13,18 +9,11 @@ import { ClipLoader } from 'react-spinners';
 import './ApplicantBasicDetails.css';
 import './ApplicantBasicDetails1.css';
 import Logo from '../../images/artboard.svg';
-<<<<<<< HEAD
-import 'react-bootstrap-typeahead/css/Typeahead.css'; 
-=======
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 import ModalComponent from './ModalComponent';
 import ModalWrapper1 from './ModalWrapper1';
 import ResumeBuilder from './ResumeBuilder';
 import Snackbar from '../common/Snackbar';
-<<<<<<< HEAD
-=======
 import { apiUrl } from "../../services/ApplicantAPIService";
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 
 const ApplicantBasicDetails = () => {
   const { user } = useUserContext();
@@ -33,21 +22,6 @@ const ApplicantBasicDetails = () => {
   number = parseInt(number, 10);
   const [isExperienceMenuOpen, setIsExperienceMenuOpen] = useState(false);
   const [isLocationMenuOpen, setIsLocationMenuOpen] = useState(false);
-<<<<<<< HEAD
-  const [isSkillsMenuOpen, setIsSkillsMenuOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [currentStage, setCurrentStage] = useState(number);
-  const [snackbars, setSnackbars] = useState([]);
-  const [error, setError] = useState('');
-  const [isNextDisabled, setIsNextDisabled] = useState(true);
-  const [isFormValid, setIsFormValid] = useState(false);
-  const[imageSrc, setImageSrc]= useState();
-  const [shouldBeHidden, setShouldBeHidden] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [dragActive, setDragActive] = useState(false);
-  const [resumeUploaded, setResumeUploaded] = useState(false);
-  const [isResponseSubmitted, setResponseSubmitted] = useState(false);
-=======
   const [loading, setLoading] = useState(true);
   const [currentStage, setCurrentStage] = useState(number);
   const [snackbars, setSnackbars] = useState([]);
@@ -56,17 +30,12 @@ const ApplicantBasicDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const [resumeUploaded, setResumeUploaded] = useState(false);
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   const [applicant, setApplicant] = useState({
     firstName: '',
     lastName: '',
     email: user.email || "",
     mobilenumber: user.mobilenumber || "",
   });
-<<<<<<< HEAD
-  const openModal = () => setIsModalOpen(true);
-=======
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   const closeModal = () => setIsModalOpen(false);
   const basicDetails = {
     firstName: applicant.firstName,
@@ -74,16 +43,7 @@ const ApplicantBasicDetails = () => {
     alternatePhoneNumber: applicant.mobilenumber,
     email: applicant.email,
   };
-<<<<<<< HEAD
-  const applicantProfileDTO = {
-    basicDetails: basicDetails,
-  };
   const [errors, setErrors] = useState({});
-
-
-=======
-  const [errors, setErrors] = useState({});
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   const handleQualificationChange = (selected) => {
     setQualification(selected[0] || null);
     setSpecialization(null);
@@ -164,13 +124,8 @@ const handlePreferredJobLocationsChange = (selected) => {
   const [state, setState] = useState('');
   const [qualification, setQualification] = useState('');
   const [specialization, setSpecialization] = useState('');
-<<<<<<< HEAD
-  const [selectedCities, setSelectedCities] = useState([]);
-  const [selectedSkills, setSelectedSkills] = useState([]);
-=======
   const [, setSelectedCities] = useState([]);
   const [, setSelectedSkills] = useState([]);
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   const [preferredJobLocations, setPreferredJobLocations] = useState([]);
   const [skillsRequired, setSkillsRequired] = useState([]);
   const navigate = useNavigate();
@@ -194,24 +149,12 @@ const handlePreferredJobLocationsChange = (selected) => {
     const setFavicon = (url) => {
       let link = document.querySelector("link[rel*='icon']");
 
-<<<<<<< HEAD
-      // if (!link) {
-      //   link = document.createElement('link');
-      //   link.rel = 'icon';
-      //   document.head.appendChild(link);
-      // }
-=======
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 
       link.type = 'image/png';
       link.href = url;
     };
     console.log("image inserted ")
-<<<<<<< HEAD
-    setFavicon('/images/favicon.png'); // Path to your favicon
-=======
     setFavicon('/images/favicon.png'); 
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   }, []);
 
 
@@ -247,13 +190,7 @@ const validateForm1 = () => {
   if (!applicant.firstName) {
     newErrors.firstName = "First name is required";
 } else {
-<<<<<<< HEAD
-    if (!validateInput('firstName', applicant.firstName)) {
         newErrors.firstName = errors.firstName;
-    }
-=======
-        newErrors.firstName = errors.firstName;
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 }
 
 if (!applicant.lastName) {
@@ -278,17 +215,6 @@ if (!applicant.mobilenumber) {
 };
 
 
-<<<<<<< HEAD
-  const makeApiCall1 = async () => {
-    if (!validateForm1()) {
-      console.log(" returned in validation");
-      return false;
-    }
-   
-  };
-
-=======
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
  
   
   const makeApiCall2 = async () => {
@@ -309,25 +235,7 @@ if (!applicant.mobilenumber) {
     }
     try {
       const jwtToken = localStorage.getItem('jwtToken');
-<<<<<<< HEAD
-      console.log(" returned during api call");
-     
-      // const putProfileResponse = await axiosInstance.post(
-      //   `${apiUrl}/applicantprofile/createprofile/${user.id}`,
-      //   applicantProfileDTO,
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${jwtToken}`,
-      //     },
-      //   }
-      // );
-      // console.log(" returned after api call");
- 
-     // Transform the payload
- 
-=======
       console.log(" returned during api call"); 
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
      const putProfileResponse = await axios.post(
       `${apiUrl}/applicantprofile/createprofile/${user.id}`,
       applicantProfileDTO,
@@ -341,11 +249,7 @@ if (!applicant.mobilenumber) {
     console.log("Profile successfully created in the system.");
  
  
-<<<<<<< HEAD
-  const MAX_RETRIES = 50; // Maximum retry attempts
-=======
   const MAX_RETRIES = 50; 
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 let retryCount = 0;
  
 async function updateZohoCRM() {
@@ -357,10 +261,6 @@ async function updateZohoCRM() {
         First_Name: basicDetails.firstName,
         Email: basicDetails.email,
         Phone: basicDetails.alternatePhoneNumber,
-<<<<<<< HEAD
-        // Lead_Status: "completed profile",
-=======
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
         Status_TS: "Completed Profile",
         Industry: "Software",
         Technical_Skills: applicantProfileDTO.skillsRequired
@@ -421,31 +321,7 @@ await updateZohoCRM();
  
 delete transformedApplicantProfileDTO.preferredJobLocations;
 delete transformedApplicantProfileDTO.skillsRequired;
-<<<<<<< HEAD
- 
-// const webhookUrl = 'https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjUwNTY1MDYzMjA0MzI1MjZjNTUzYzUxMzQi_pc';
-// const webhookPayload = {
-//   userId: user.id,
-//   profileData: transformedApplicantProfileDTO,
-// };
- 
-// const webhookResponse = await fetch(webhookUrl, {
-//   method: 'POST',
-//   headers: {
-//       'Content-Type': 'application/json',
-//   },
-//   body: JSON.stringify(webhookPayload),
-// });
- 
-//     if (!webhookResponse.ok) {
-//       throw new Error('Failed to send data to the webhook');
-//     }
- 
-//     console.log('Webhook response:', await webhookResponse.json());
- 
-=======
 
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
    
     } catch (error) {
       console.error('Error submitting form data:', error);
@@ -532,64 +408,6 @@ delete transformedApplicantProfileDTO.skillsRequired;
       document.getElementById('tf-upload-img').files = event.dataTransfer.files;
     }
   };
-<<<<<<< HEAD
-
-  const handleResumeUpload = async () => {
-    try {
-      const jwtToken = localStorage.getItem('jwtToken');
-      const formData = new FormData();
-      formData.append('resume', resumeFile);
-      const response = await axios.post(
-        `${apiUrl}/applicant-pdf/${user.id}/upload`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${jwtToken}`,
-          },
-        }
-      );
-      console.log(response.data);
-    
-      addSnackbar({ message: response.data, type: 'success' });
-      window.location.reload();
-    } catch (error) {
-      console.error('Error uploading resume:', error);
-     
-     addSnackbar({ message: 'Error uploading resume. Please try again.', type: 'error' });
-    }
-  };
-
-  const handleResumeBuilder = async () => {
-    const apiUrl1 = 'https://resume.bitlabs.in:5173/api/auth/login';
-    if (requestData) {
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestData),
-      };
-      fetch(apiUrl1, requestOptions)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          const loginUrl = `https://resume.bitlabs.in:5173/auth/login?identifier=${encodeURIComponent(requestData.identifier)}&password=${encodeURIComponent(requestData.password)}`;
-          setLoginUrl(loginUrl);
-          
-          setIsModalOpen(true);
-        })
-        .catch(error => {
-          console.error('There was a problem with the fetch operation:', error);
-        });
-    }
-  };
-
-=======
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   const validateFields = () => {
     const newErrors = {};
     
@@ -620,12 +438,7 @@ delete transformedApplicantProfileDTO.skillsRequired;
           break;
         case 2:
 
-<<<<<<< HEAD
-        if (validateFields()) {
-          const response2 = await makeApiCall2(); 
-=======
         if (validateFields()) { 
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
           console.log('API call 2 response:');
         } else {
           return false;
@@ -669,10 +482,6 @@ delete transformedApplicantProfileDTO.skillsRequired;
       const jwtToken = localStorage.getItem('jwtToken');
       const formData = new FormData();
       formData.append('resume', resumeFile);
-<<<<<<< HEAD
-      setResponseSubmitted(true);
-=======
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
       const response = await axios.post(
         `${apiUrl}/applicant-pdf/${user.id}/upload`,
 
@@ -694,45 +503,14 @@ delete transformedApplicantProfileDTO.skillsRequired;
       
     } catch (error) {
       console.error('Error uploading resume:', error);
-<<<<<<< HEAD
-      setResponseSubmitted(false);
-      setResumeUploaded(false);
-      if (error.code === 'ERR_NETWORK') {
-        addSnackbar({ message: 'Please check your network and try again.', type: 'error' });
-      }
-      else{
-        addSnackbar({ message: 'Error uploading resume. Please try again.', type: 'error' });
-      }    }
-=======
       
       addSnackbar({ message: 'Error uploading resume. Please try again.', type: 'error' });
     }
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
     resetForm();
    
    
   };
 
-<<<<<<< HEAD
-  const validateForm = () => {
-    const newErrors = {};
-    if (currentStage === 1) {
-      if (!applicant.name) newErrors.name = 'Name is required';
-      if (!applicant.email) newErrors.email = 'Email is required';
-      if (!applicant.mobilenumber) newErrors.mobilenumber = 'Mobile number is required';
-      if (!experience) newErrors.experience = 'Experience is required';
-    } else if (currentStage === 2) {
-      if (!qualification) newErrors.qualification = 'Qualification is required';
-      if (!specialization) newErrors.specialization = 'Specialization is required';
-      if (!preferredJobLocations.length) newErrors.preferredJobLocations = 'At least one job location is required';
-      if (!skillsRequired.length) newErrors.skillsRequired = 'At least one skill is required';
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-=======
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   const resetForm = () => {
     setApplicant({ name: '', email: '', mobilenumber: '' });
     setExperience('');
@@ -774,13 +552,10 @@ delete transformedApplicantProfileDTO.skillsRequired;
                   'Interior Designing','Fashion Designing','Hotel Management and Catering Technology','Pharmacy','Medical Laboratory Technology',
                  'Radiology and Imaging Technology'],  
   };
-<<<<<<< HEAD
-=======
   const handleExperienceClick = (selectedExperience) => {
   setExperience(selectedExperience);
   setIsExperienceMenuOpen(false);
 };
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 
   const renderStageFields = () => {
     switch (currentStage) {
@@ -933,31 +708,6 @@ delete transformedApplicantProfileDTO.skillsRequired;
                     }}
                   >
                     {results.map((option, index) => (
-<<<<<<< HEAD
-                      <li
-                        key={index}
-                        onClick={() => {
-                          setExperience(option.label);
-                          setIsExperienceMenuOpen(false);
-                          // Optional blur
-                          setTimeout(() => {
-                            const inputEl = document.querySelector('#experience input');
-                            if (inputEl) inputEl.blur();
-                          }, 0);
-                        }}
-                        style={{
-                          padding: '3px 7px',
-                          fontSize: '16px',
-                          fontWeight: option.label === experience ? 'bold' : 'normal',
-                          cursor: 'pointer',
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                        }}
-                      >
-                        {option.label}
-                      </li>
-=======
                     <li
   key={option.label} 
   role="button"     
@@ -982,7 +732,6 @@ delete transformedApplicantProfileDTO.skillsRequired;
   {option.label}
 </li>
 
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
                     ))}
                   </ul>
                 )}
@@ -1006,11 +755,7 @@ delete transformedApplicantProfileDTO.skillsRequired;
            onChange={(selected) => {
                   handlePreferredJobLocationsChange(selected);
                   if (selected.length < preferredJobLocations.length) {
-<<<<<<< HEAD
-                    setTimeout(() => setIsLocationMenuOpen(true), 160); // Delay to override blur
-=======
                     setTimeout(() => setIsLocationMenuOpen(true), 160); 
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
                   } else {
                     setIsLocationMenuOpen(false);
                   }
@@ -1019,11 +764,7 @@ delete transformedApplicantProfileDTO.skillsRequired;
                 className="input-form typeahead"
                 inputProps={{}}
                 onInputChange={() => {
-<<<<<<< HEAD
-                  setIsLocationMenuOpen(true); // Keep dropdown open on typing
-=======
                   setIsLocationMenuOpen(true);
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
                 }}
                 filterBy={(option) => !preferredJobLocations.includes(option)}
                 labelKey={(option) => option}
@@ -1291,15 +1032,11 @@ delete transformedApplicantProfileDTO.skillsRequired;
   <button
     type="submit"
     className="form-button"
-<<<<<<< HEAD
-    disabled={!resumeUploaded || isResponseSubmitted}
-=======
     disabled={!resumeUploaded}
     style={{
       opacity: resumeUploaded ? 1 : 0.6,
       cursor: resumeUploaded ? 'pointer' : 'not-allowed',
     }}
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   >
     Submit
   </button>

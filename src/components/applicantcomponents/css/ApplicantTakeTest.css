@@ -130,11 +130,7 @@
     margin-top: 10px !important;
 }
 
-<<<<<<< HEAD
-.test-page .header {
-=======
 .header {
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
     display: flex !important;
     justify-content: space-between !important;
     align-items: left !important;

@@ -8263,11 +8263,7 @@ h3 span.icon-bolt {
   gap: 4px;
 }
 
-<<<<<<< HEAD
-.features-job .job-archive-footer .job-tag li a {
-=======
 .features-job .job-archive-footer .job-tag li p {
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   background-color: #F6F6f6;
   color: #121212;
   font-size: 12px;
@@ -8897,11 +8893,7 @@ input[type="number"]::-webkit-inner-spin-button {
   align-items: center;
 }
 
-<<<<<<< HEAD
-.features-job.style-3 .category .job-tag li a {
-=======
 .features-job.style-3 .category .job-tag li p {
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   background-color: #f1f1f1;
   color: #121212;
   font-size: 12px;
@@ -8911,11 +8903,7 @@ input[type="number"]::-webkit-inner-spin-button {
   border-radius: 52px;
 }
 
-<<<<<<< HEAD
-.features-job.style-3 .category .job-tag li a:hover {
-=======
 .features-job.style-3 .category .job-tag li p:hover {
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   background: #EE6D12;
   color: #fff;
 }
