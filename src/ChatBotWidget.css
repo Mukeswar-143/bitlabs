@@ -2,14 +2,25 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
+<<<<<<< HEAD
   background-color: #F97316;
   color: white;
+=======
+  background-color: #F97316; 
+  color: white;
+  border: none; 
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   border-radius: 50%;
   padding: 15px;
   font-size: 22px;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   z-index: 1000;
+<<<<<<< HEAD
+=======
+  transition: background-color 0.3s, transform 0.2s;
+  outline: none; 
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 }
 
 .chatbox {
@@ -29,6 +40,12 @@
 }
 
 .chat-header {
+<<<<<<< HEAD
+=======
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   background-color: #f86b05;
   color: white;
   font-weight: bold;
@@ -46,7 +63,11 @@
 .chat-bubble {
   display: flex;
   margin: 8px 0;
+<<<<<<< HEAD
   max-width: 95%;
+=======
+  max-width: 100%;
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 }
 
 .chat-bubble.bot {
@@ -64,6 +85,10 @@
   font-size: 14px;
   white-space: pre-wrap;
   word-wrap: break-word;
+<<<<<<< HEAD
+=======
+  max-width: 270px;
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 }
 
 .chat-bubble.user .bubble-content {
@@ -77,8 +102,13 @@
   padding: 10px;
   background: #fff;
 }
+<<<<<<< HEAD
 
 .chat-input-area input {
+=======
+/* update */
+.chat-input-area textarea {
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   flex: 1;
   border: none;
   padding: 10px;
@@ -86,6 +116,17 @@
   background: #f3f3f3;
   margin-right: 10px;
   outline: none;
+<<<<<<< HEAD
+=======
+  max-height: 45px;
+  overflow-y: auto;      
+  scrollbar-width: none; 
+  resize: none;
+}
+
+.chat-input-area textarea::-webkit-scrollbar {
+  display: none;
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 }
 
 .chat-input-area button {
@@ -97,6 +138,7 @@
   cursor: pointer;
   font-size: 16px;
 }
+<<<<<<< HEAD
 
 
 .chat-header {
@@ -108,6 +150,22 @@
   font-weight: bold;
 }
 
+=======
+/* update */
+.chat-input-area .button-cancel {
+  background: #F97316;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 0 10px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+
+
+
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 .chat-actions {
   display: flex;
   align-items: center;

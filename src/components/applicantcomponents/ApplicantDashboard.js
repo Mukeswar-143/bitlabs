@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import { useState, useEffect } from 'react';
 import axios from "axios";
@@ -13,12 +14,22 @@ import { faL } from "@fortawesome/free-solid-svg-icons";
 import ModalWrapper from './ModalWrapper';
 import Button from '@mui/material/Button';
 import ResumeBuilder from './ResumeBuilder';
+=======
+import { useState, useEffect } from 'react';
+import axios from "axios";
+import { useUserContext } from '../common/UserProvider';
+import { apiUrl } from '../../services/ApplicantAPIService';
+import { useNavigate , Link , useLocation } from "react-router-dom";
+import Certificate from '../../images/user/avatar/Certificate.png';
+import Taketest from '../../images/user/avatar/Taketest.png';
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 import SmartPhone from "../../images/dashboard/mobilebanners/smartphone.png"
 import appStoreIcon from "../../images/dashboard/mobilebanners/appstoreicon.png";
 import playStore from "../../images/dashboard/mobilebanners/playstore.png";
  
  
 const ApplicantDashboard = () => {
+<<<<<<< HEAD
   const [token, setToken] = useState('');
   const { user } = useUserContext();
   const [loading, setLoading] = useState(true);
@@ -33,6 +44,17 @@ const ApplicantDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+=======
+  const { user } = useUserContext();
+  const [loading, setLoading] = useState(true);
+  const [contRecJobs, setCountRecJobs] = useState("0");
+  const [contAppliedJob, setAppliedJobs] = useState(0);
+  const [contSavedJobs, setSavedJobs] = useState(0);
+  const navigate = useNavigate();
+  const userId = user.id;
+  const [isHovered, setIsHovered] = useState(false);
+  const [userData, setUserData] = useState(null);
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   const [isWideScreen, setIsWideScreen] = useState(false);
   const [hiredCount, setHiredCount] = useState(null);
  
@@ -100,11 +122,14 @@ const ApplicantDashboard = () => {
         const profileId = profileIdResponse.data;
  
  
+<<<<<<< HEAD
         if (profileId === 0) {
           navigate('/applicant-basic-details-form');
         } else {
           setLoading(false);
         }
+=======
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
       } catch (error) {
         console.error('Error fetching profile ID:', error);
       }
@@ -143,6 +168,7 @@ const ApplicantDashboard = () => {
     fetchUserData();
   }, []);
  
+<<<<<<< HEAD
  
  
   useEffect(() => {
@@ -151,6 +177,9 @@ const ApplicantDashboard = () => {
       setToken(storedToken);
     }
   }, []);
+=======
+
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -552,6 +581,64 @@ const ApplicantDashboard = () => {
                         <div className="resumecard-content">
                           <div className="resumecard-text">
                             <div className="resumecard-heading">
+<<<<<<< HEAD
+=======
+                              <h2 className="heading1">  Join the Coding Challenge
+                                <span
+                                  style={{
+                                    color: '#F00', // Red text color
+                                    border: '1px solid var(--Color-2, #F00)', // Red border
+                                    borderRadius: '13px', // Rounded corners
+                                    padding: '3px 8px', // Spacing around text
+                                    marginLeft: '15px', // Space between "Verified badges" and "New"
+                                    fontSize: '10px', // Adjust font size as needed
+                                    // fontFamily:'Inter',
+                                    fontStyle: 'normal',
+                                    fontWeight: '500',
+                                    lineHeight: 'normal',
+                                  }}
+                                >
+                                  New
+                                </span>
+                              </h2>
+                              <div className="" style={{ fontSize: '16.8px', color: '#6F6F6F', fontWeight: '500', fontFamily: 'Plus Jakarta Sans', fontStyle: 'normal',paddingTop: '10px' }}>
+                               Sharpen your skills with real-world coding challenges.
+                              </div>
+                            </div>
+                            <div className="resumecard-button">
+                              <Link
+  to="/applicantcoding"
+  className="button-link1"
+  style={linkStyle}
+  onMouseEnter={() => setIsHovered(true)}
+  onMouseLeave={() => setIsHovered(false)}
+>
+  <span className="button button-custom" style={spanStyle}>Start Coding</span>
+</Link>
+
+                            </div>
+                          </div>
+ 
+                          <div className="resumecard-icon" style={{ marginLeft: 'auto' }}>
+                            <img
+                              src={Taketest}
+                              alt="Taketest"
+                              style={{ width: '160px', height: 'auto', objectFit: 'contain', marginTop: '10px' }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {!showIcon && (
+                  <div className="col-12 col-xxl-9 col-xl-12 col-lg-12 col-md-12 col-sm-12 display-flex certificatebox">
+                    <div className="card" style={{ cursor: 'pointer', backgroundColor: '#FFF9E3', fontFamily: 'Plus Jakarta Sans', fontWeight: '500' }}>
+                      <div className={!isWideScreen ? 'resumecard' : ''}>
+                        <div className="resumecard-content">
+                          <div className="resumecard-text">
+                            <div className="resumecard-heading">
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
                               <h2 className="heading1">Earn Pre-Screened Badges
                                 <span
                                   style={{
@@ -635,6 +722,10 @@ const ApplicantDashboard = () => {
                     </div>
                   </div>
                 </div>
+<<<<<<< HEAD
+=======
+                
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
               </div>
             </div>
           </div>

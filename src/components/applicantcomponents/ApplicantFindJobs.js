@@ -152,6 +152,16 @@ const handlePageClick = (pageNum) => {
   const handleCloseSnackbar = (index) => {
     setSnackbars((prevSnackbars) => prevSnackbars.filter((_, i) => i !== index));
   };
+<<<<<<< HEAD
+=======
+
+   function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
+    return formattedDate;
+  }
+
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   return (
     <div>
      {loading ? null : (
@@ -224,7 +234,11 @@ const handlePageClick = (pageNum) => {
                               <div className="job-footer-right">
                                 <div className="price">
                                   <span>
+<<<<<<< HEAD
                                     <span style={{ fontSize: "12px" }}>Posted on {new Date(job.creationDate).toLocaleDateString()}</span>
+=======
+                                    <span style={{ fontSize: "12px" }}>Posted on {formatDate(job.creationDate)}</span>
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
                                   </span>
                                 </div>
                                 <ul className="job-tag">

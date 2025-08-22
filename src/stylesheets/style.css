@@ -3269,7 +3269,10 @@ white-space: nowrap;
 }
 
 .password-toggle-icon {
+<<<<<<< HEAD
   all: unset;
+=======
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
   position: absolute;
   right: 10px; 
   top: 50%;

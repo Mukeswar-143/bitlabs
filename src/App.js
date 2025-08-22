@@ -3,7 +3,10 @@ import './App.css';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import IndexPage from './pages/indexpage/IndexPage';
+<<<<<<< HEAD
 import AboutPage from './pages/aboutpage/AboutPage';
+=======
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 import ContactPage from './pages/contactpage/ContactPage';
 import LoginPage from './pages/loginpage/LoginPage';
 import FindJobPage from './pages/loginpage/FindJobPage';
@@ -22,6 +25,11 @@ import TermsOfServices from './components/common/TermsOfServices';
 import ApplicantBasicDetails from './components/applicantcomponents/ApplicantBasicDetails';
 import JobWidget from './components/jobWidget';
 import ChatBotWidget from './ChatBotWidget';
+<<<<<<< HEAD
+=======
+import ApplicantCoding from './components/applicantcomponents/ApplicantCoding';
+import ApplicantCompiler from './components/applicantcomponents/ApplicantCompiler';
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 
 
 
@@ -61,7 +69,10 @@ function App() {
               <Route path="/find-jobs-login" element={<FindJobPage onLogin={handleLogin} />} />
               <Route path="/find-candidates-login" element={<FindCandidatesPage onLogin={handleLogin} />} />
               <Route path="/find-candidates" element={<IndexPage />} />
+<<<<<<< HEAD
               <Route path="/aboutus" element={<AboutPage />} />
+=======
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
               <Route path="/contactus" element={<ContactPage />} />
               <Route path="/candidate" element={<LoginPage onLogin={handleLogin} />} />
               <Route path="/applicant-forgot-password" element={<ApplicantForgotPasswordPage />} />
@@ -75,6 +86,11 @@ function App() {
               {isLoggedIn ? (
                 <>
                 <Route path="/applicanthome" element={<ApplicantHomePage />} />
+<<<<<<< HEAD
+=======
+                <Route path="/applicantcompiler/:id" element={<ApplicantCompiler />} />
+                <Route path="/applicantcoding" element={<ApplicantHomePage />} />
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
                 <Route path="/applicant-update-profile" element={<ApplicantHomePage />} />
                 <Route path="/applicant-view-profile" element={<ApplicantHomePage />} />
                 <Route path="/applicant-find-jobs" element={<ApplicantHomePage />} />

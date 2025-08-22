@@ -133,7 +133,11 @@ function LoginBody({ handleLogin }) {
 
           const id = await handleLead(leadData);
           console.log("Zoho User ID from login page :", id);
+<<<<<<< HEAD
           sessionStorage.setItem("zohoUserId", id);
+=======
+          // sessionStorage.setItem("zohoUserId", id);
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
     
 
 
@@ -324,6 +328,7 @@ function LoginBody({ handleLogin }) {
         }
 
         // ✅ Fetch Zoho User ID based on email
+<<<<<<< HEAD
         const zohoResponse = await axios.get(
           `${apiUrl}/zoho/searchlead/${candidateEmail}`
         );
@@ -333,6 +338,17 @@ function LoginBody({ handleLogin }) {
           sessionStorage.setItem("zohoUserId", zohoUserId); // Store Zoho User ID in session
           console.log("Zoho User ID:", zohoUserId);
         }
+=======
+        // const zohoResponse = await axios.get(
+        //   `${apiUrl}/zoho/searchlead/${candidateEmail}`
+        // );
+        // const zohoUserId = zohoResponse.data?.data?.[0]?.id;
+
+        // if (zohoUserId) {
+        //   sessionStorage.setItem("zohoUserId", zohoUserId); // Store Zoho User ID in session
+        //   console.log("Zoho User ID:", zohoUserId);
+        // }
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 
         const profileIdResponse = await axios.get(
           `${apiUrl}/applicantprofile/${userId}/profileid`,
@@ -646,9 +662,15 @@ function LoginBody({ handleLogin }) {
 
      
 
+<<<<<<< HEAD
       const zohoUserId = await handleLead(leadData);
       console.log("Zoho User ID from login page :", zohoUserId);
       sessionStorage.setItem("zohoUserId", zohoUserId);
+=======
+      // const zohoUserId = await handleLead(leadData);
+      // console.log("Zoho User ID from login page :", zohoUserId);
+      // sessionStorage.setItem("zohoUserId", zohoUserId);
+>>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 
       if (candidateOTPSent && candidateOTPVerified) {
         navigate("/candidate", { state: { registrationSuccess: true } });

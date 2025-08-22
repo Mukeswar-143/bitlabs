@@ -1,0 +1,253 @@
+/* Global Wrapper */
+.compiler-wrapper {
+  display: flex;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  gap: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Left Pane */
+.compiler-left {
+  flex: 0.35;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #fff;
+  overflow-y: auto;
+  margin: 5px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  border: 1px solid #e5e5e5;
+}
+
+.compiler-left .compiler-top-buttons {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 15px;
+}
+
+.compiler-top-buttons button {
+  background: #fff;
+  color: #f97316;
+  border: 1px solid #f97316;
+  font-weight: 600;
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.compiler-top-buttons button:hover {
+  background: #f97316;
+  color: #fff;
+}
+
+.compiler-left .question-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: #222;
+  border-bottom: 2px solid #f97316;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+}
+
+.compiler-left .problem-statement {
+  font-size: 18px;
+  color: #444;
+  line-height: 1.6;
+  border-bottom: 1px solid #f97316;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.compiler-left .complexity,
+.compiler-left .constraints {
+  font-size: 16px;
+  color: #555;
+  margin: 12px 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.compiler-left .test-inputs {
+  margin-top: 15px;
+  padding: 10px;
+  background: #f9fafb;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+/* Right Pane */
+.compiler-right {
+  flex: 0.65;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  margin: 5px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  border: 1px solid #e5e5e5;
+  overflow: hidden;
+}
+
+/* Right Top (Language + Editor + Buttons) */
+.compiler-right-top {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Language Selector */
+.language-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.language-label {
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+}
+
+.language-selector select {
+  height: 38px;
+  padding: 4px 10px;
+  font-size: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fdfdfd;
+  cursor: pointer;
+}
+
+/* Code Editor + Line Numbers */
+.editor-wrapper {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: monospace;
+  overflow: hidden;
+  height: 80%;
+}
+.code-editor {
+  flex: 1;
+  padding: 12px;
+  font-size: 14px;
+  border: none;
+  outline: none;
+  resize: none;
+  background: #fff;
+  overflow-y: auto;
+  font-family: monospace;
+  height: 100%;
+}
+/* Buttons */
+.compiler-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 12px;
+}
+
+.run-btn,
+.submit-btn {
+  padding: 8px 18px;
+  font-size: 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.25s;
+}
+
+.run-btn {
+  background: #007bff;
+  color: #fff;
+}
+
+.run-btn:hover {
+  background: #0062cc;
+}
+
+.submit-btn {
+  background: #28a745;
+  color: #fff;
+}
+
+.submit-btn:hover {
+  background: #218838;
+}
+
+/* Output Section */
+.output-section {
+  flex: 0.5;
+  overflow-y: auto;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  margin-top: 12px;
+}
+
+.output-section h2 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.output-section p {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 6px 0;
+}
+
+.output-box {
+  background: #f8f9fa;
+  padding: 10px;
+  border: 1px solid #ddd;
+  white-space: pre-wrap;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* ✅ Responsive Adjustments */
+@media (max-width: 1024px) {
+  .compiler-wrapper {
+    flex-direction: column;
+    height: auto;
+  }
+  .compiler-left, .compiler-right {
+    flex: 1;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .language-selector {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .code-editor {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .code-editor {
+    font-size: 12px;
+    height: 220px;
+  }
+  .output-box {
+    font-size: 12px;
+  }
+}
