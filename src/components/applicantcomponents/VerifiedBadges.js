@@ -35,14 +35,7 @@ import flaskPNG from '../../images/Icons1/Icons/Flask.png';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Verified from '../../images/user/avatar/Verified.png';
 import { ClipLoader } from 'react-spinners';
-<<<<<<< HEAD
 import VerifiedVideos from './VerifiedVideos';
-=======
-
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
-
-
-
 const SkillBadgeCard = ({ skillName, status, badgeIcon, retakeTest, testFailedAt }) => {
   const [timeLeft, setTimeLeft] = useState({});
   const [isRetakeAvailable, setIsRetakeAvailable] = useState(false);
@@ -978,14 +971,9 @@ const VerifiedBadges = () => {
     </div>
   </div>
 </div>
-<<<<<<< HEAD
-<VerifiedVideos />
-=======
-
->>>>>>> 9ba760c6bac85b2b14fe5937ceaed26401de597a
 
 
-      
+<VerifiedVideos /> 
 
     </div>)
   );
